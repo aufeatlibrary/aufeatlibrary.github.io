@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Annamalai University FEAT Library Virtual Tours</title>
+  <link rel="icon" href="new image/logo.png">
+
+  <!-- Google Fonts & FontAwesome -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-body: #0f172a;
+      --bg-nav: rgba(15, 23, 42, 0.88);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --card-bg: rgba(30, 41, 59, 0.72);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+      --primary: #38bdf8;
+      --primary-hover: #0284c7;
+      --accent-gold: #fbbf24;
+      --accent-green: #34d399;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --input-bg: rgba(15, 23, 42, 0.6);
+      --badge-bg: rgba(15, 23, 42, 0.82);
+    }
+
+    [data-theme="light"] {
+      --bg-body: #f8fafc;
+      --bg-nav: rgba(255, 255, 255, 0.92);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --card-bg: #ffffff;
+      --card-border: rgba(0, 0, 0, 0.08);
+      --card-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --accent-gold: #d97706;
+      --accent-green: #059669;
+      --glass-bg: rgba(0, 0, 0, 0.03);
+      --glass-border: rgba(0, 0, 0, 0.1);
+      --input-bg: #f1f5f9;
+      --badge-bg: rgba(255, 255, 255, 0.9);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Top Sticky Navigation */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.1rem 5%;
+      background-color: var(--bg-nav);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .brand-logo {
+      color: var(--text-main);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-logo-img {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(56, 189, 248, 0.35));
+    }
+
+    .brand-logo i {
+      color: var(--primary);
+      font-size: 1.45rem;
+    }
+
+    .brand-logo span.badge-pill {
+      font-size: 0.72rem;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 2px 8px;
+      border-radius: 12px;
+      margin-left: 4px;
+      font-weight: 700;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-btn,
+    .theme-toggle-btn {
+      background: var(--glass-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 0.55rem 1.2rem;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .nav-btn:hover,
+    .theme-toggle-btn:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .nav-btn.primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
+    }
+
+    .nav-btn.primary:hover {
+      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.45);
+    }
+
+    .icon-only-btn {
+      padding: 0;
+      width: 40px;
+      height: 40px;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    /* Page Header Hero */
+    .page-hero {
+      position: relative;
+      padding: 3.5rem 1.5rem 2rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.15), transparent 70%);
+    }
+
+    .hero-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--glass-bg);
+      border: 1px solid var(--card-border);
+      padding: 0.4rem 1.1rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent-gold);
+      margin-bottom: 1.2rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .page-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, var(--text-main) 40%, var(--primary));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.8rem;
+    }
+
+    .page-subtitle {
+      max-width: 760px;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.65;
+      margin: 0 auto 1.5rem;
+    }
+
+    /* Global Options Toolbar */
+    .options-bar-wrapper {
+      max-width: 1280px;
+      margin: 0 auto 2.5rem;
+      padding: 0 1.5rem;
+      width: 100%;
+    }
+
+    .options-bar {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 1rem 1.4rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      box-shadow: var(--card-shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .options-left {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .options-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-right: 6px;
+    }
+
+    .filter-pill {
+      background: var(--glass-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 0.45rem 1rem;
+      border-radius: 20px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.25s ease;
+    }
+
+    .filter-pill:hover {
+      color: var(--text-main);
+      border-color: var(--primary);
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    .filter-pill.active {
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
+    }
+
+    .options-right {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .option-select-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .option-select-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .custom-select {
+      background: var(--input-bg);
+      color: var(--text-main);
+      border: 1px solid var(--card-border);
+      padding: 0.45rem 0.9rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .custom-select:focus {
+      border-color: var(--primary);
+    }
+
+    .option-action-btn {
+      background: var(--glass-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 0.45rem 0.9rem;
+      border-radius: 10px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .option-action-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: rgba(56, 189, 248, 0.08);
+    }
+
+    /* Main Container & Video Cards Grid */
+    .tour-content-section {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 1.25rem 3.5rem;
+      width: 100%;
+      flex: 1;
+    }
+
+    .tour-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .video-card.featured-tour-card {
+      grid-column: 1 / -1;
+      border-color: rgba(56, 189, 248, 0.45);
+    }
+
+    @media (min-width: 981px) {
+      .video-card.featured-tour-card .card-video-frame {
+        max-height: 400px;
+      }
+    }
+
+    /* Video Card Component (Compact Refined Size) */
+    .video-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .video-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      border-color: var(--primary);
+    }
+
+    .video-card.is-hidden {
+      display: none !important;
+    }
+
+    /* Video Frame Container */
+    .card-video-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000000;
+      overflow: hidden;
+    }
+
+    .card-video-frame video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      background: #000000;
+      outline: none;
+    }
+
+    /* Badges Overlay */
+    .card-badges-top {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .card-category-badge {
+      background: var(--badge-bg);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 16px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    [data-theme="light"] .card-category-badge {
+      color: #0f172a;
+      border-color: rgba(0, 0, 0, 0.12);
+    }
+
+    .card-category-badge i {
+      color: var(--primary);
+    }
+
+    .card-res-badge {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      color: #fbbf24;
+      padding: 3px 8px;
+      border-radius: 14px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      border: 1px solid rgba(251, 191, 36, 0.3);
+    }
+
+    /* Card Content Area */
+    .card-body {
+      padding: 1.15rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: space-between;
+      gap: 0.85rem;
+    }
+
+    .card-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .card-title-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.12rem;
+      color: var(--text-main);
+      font-weight: 700;
+      line-height: 1.35;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title i {
+      color: var(--primary);
+      font-size: 1rem;
+    }
+
+    .card-desc {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    /* Feature Pills in Card */
+    .card-features-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 0.2rem;
+    }
+
+    .card-pill {
+      background: var(--glass-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 0.26rem 0.62rem;
+      border-radius: 14px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .card-pill i {
+      color: var(--primary);
+      font-size: 0.7rem;
+    }
+
+    /* In-Card Options Toolbar */
+    .card-options-toolbar {
+      background: var(--glass-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 0.55rem 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .card-options-left {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .card-speed-label {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card-speed-select {
+      background: var(--input-bg);
+      color: var(--text-main);
+      border: 1px solid var(--card-border);
+      padding: 0.25rem 0.5rem;
+      border-radius: 7px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .card-options-right {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .card-btn-option {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 0.32rem 0.65rem;
+      border-radius: 7px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+    }
+
+    .card-btn-option:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .card-btn-option.is-active {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+      color: var(--primary);
+    }
+
+    .card-btn-option.youtube-video-btn {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #ef4444 !important;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .card-btn-option.youtube-video-btn i {
+      color: #ff0000;
+      font-size: 0.95rem;
+      transition: transform 0.2s ease;
+    }
+
+    .card-btn-option.youtube-video-btn:hover {
+      background: #ff0000;
+      border-color: #ff0000;
+      color: #ffffff !important;
+      box-shadow: 0 4px 14px rgba(255, 0, 0, 0.35);
+    }
+
+    .card-btn-option.youtube-video-btn:hover i {
+      color: #ffffff;
+      transform: scale(1.15);
+    }
+
+    /* Theater / Focus Modal */
+    .theater-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(5, 10, 24, 0.94);
+      backdrop-filter: blur(20px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .theater-modal.is-open {
+      display: flex;
+      opacity: 1;
+    }
+
+    .theater-modal-content {
+      width: 100%;
+      max-width: 1100px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .theater-video-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000000;
+    }
+
+    .theater-video-wrapper video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+    }
+
+    .theater-header {
+      padding: 1.2rem 1.6rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--card-border);
+      background: var(--bg-nav);
+    }
+
+    .theater-header h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.25rem;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .theater-close-btn {
+      background: var(--glass-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: all 0.2s;
+    }
+
+    .theater-close-btn:hover {
+      background: #ef4444;
+      color: #ffffff;
+      border-color: #ef4444;
+    }
+
+    .theater-footer {
+      padding: 1.2rem 1.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      background: var(--bg-nav);
+    }
+
+    .theater-footer-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      max-width: 600px;
+    }
+
+    /* Toast Notification */
+    .toast-notice {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: rgba(15, 23, 42, 0.92);
+      color: #ffffff;
+      border: 1px solid var(--primary);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      padding: 0.8rem 1.4rem;
+      border-radius: 30px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 3000;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .toast-notice.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast-notice i {
+      color: var(--accent-green);
+    }
+
+    /* ==============================================================
+       CREATED BY SECTION STYLES
+       ============================================================== */
+    .section-container {
+      max-width: 1280px;
+      margin: 2rem auto 5rem;
+      padding: 0 1.5rem;
+      width: 100%;
+    }
+
+    .section-title {
+      text-align: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.2rem;
+      color: var(--text-main);
+      margin-bottom: 2.4rem;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      width: 50px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent-gold));
+      display: block;
+      margin: 12px auto 0;
+      border-radius: 2px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-top: -1.6rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .creator-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      max-width: 920px;
+      margin: 1rem auto 0;
+    }
+
+    .creator-toggle-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin: -1.2rem auto 2.5rem;
+    }
+
+    .creator-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: #ffffff;
+      border: none;
+      border-radius: 50px;
+      padding: 0.9rem 2.2rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      box-shadow: 0 10px 24px -4px rgba(2, 132, 199, 0.4);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .creator-toggle:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px -4px rgba(2, 132, 199, 0.55);
+    }
+
+    .creator-grid.is-hidden {
+      display: none;
+    }
+
+    .creator-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      min-width: 235px;
+      max-width: 265px;
+      position: relative;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+                  box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+                  border-color 0.35s ease;
+    }
+
+    .creator-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--primary);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.25);
+    }
+
+    .creator-card-img-wrap {
+      width: 100%;
+      aspect-ratio: 3 / 3.8;
+      background: #00cefb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    [data-theme="light"] .creator-card-img-wrap {
+      background: #00cefb;
+    }
+
+    .creator-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .creator-card:hover img {
+      transform: scale(1.03);
+    }
+
+    .creator-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, 0.45) 100%);
+      pointer-events: none;
+    }
+
+    .creator-pill-badge {
+      position: absolute;
+      bottom: 10px;
+      left: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(11, 15, 25, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 50px;
+      padding: 0.25rem 0.7rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 2;
+    }
+
+    .creator-pill-badge i {
+      color: var(--primary);
+      font-size: 0.74rem;
+    }
+
+    .creator-card-content {
+      padding: 1rem 1.05rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 0.6rem;
+    }
+
+    .creator-header-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .creator-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.2px;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .creator-dept-tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--primary);
+      letter-spacing: 0.2px;
+    }
+
+    .creator-batch {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--accent-gold);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      letter-spacing: 0.2px;
+    }
+
+    .creator-bio {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      line-height: 1.5;
+      margin: 0;
+      flex: 1;
+    }
+
+    .creator-skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 0.1rem;
+    }
+
+    .creator-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--glass-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      font-size: 0.67rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .creator-card:hover .creator-tag {
+      border-color: rgba(2, 132, 199, 0.25);
+      color: var(--text-main);
+    }
+
+    .creator-card-footer {
+      padding-top: 0.65rem;
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+
+    .creator-affiliation {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .creator-affiliation i {
+      color: var(--accent-gold);
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--bg-nav);
+      border-top: 1px solid var(--card-border);
+      color: var(--text-muted);
+      text-align: center;
+      padding: 2.2rem 1.5rem;
+      margin-top: auto;
+      font-size: 0.9rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 980px) {
+      .tour-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+      .creator-grid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+      .creator-card {
+        width: 100%;
+        max-width: 265px;
+      }
+      .creator-card-img-wrap {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 3 / 3.8;
+      }
+      .creator-card-content {
+        padding: 1rem 1.05rem 1.15rem;
+        gap: 0.6rem;
+      }
+      .creator-name {
+        font-size: 1.1rem;
+      }
+      .page-title {
+        font-size: 2.2rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .navbar {
+        padding: 0.9rem 1rem;
+      }
+      .page-hero {
+        padding: 2.5rem 1rem 1.5rem;
+      }
+      .page-title {
+        font-size: 1.85rem;
+      }
+      .options-bar {
+        padding: 0.9rem;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .options-left,
+      .options-right {
+        justify-content: center;
+      }
+      .card-body {
+        padding: 0.95rem;
+      }
+      .card-options-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .card-options-left,
+      .card-options-right {
+        justify-content: space-between;
+      }
+      .card-btn-option {
+        flex: 1;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body data-theme="light">
+
+  <!-- Sticky Navbar -->
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="brand-logo" title="Back to Home Portal">
+        <img src="new image/logo.png" alt="Annamalai University Logo" class="brand-logo-img">
+        <span>Annamalai University</span>
+        <span class="badge-pill">FEAT</span>
+      </a>
+
+      <div class="nav-actions">
+        <a href="index.html#videoTourSection" class="nav-btn">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Back to Home</span>
+        </a>
+        <a href="gallery.html" class="nav-btn">
+          <i class="fa-solid fa-images"></i>
+          <span>Photo Gallery</span>
+        </a>
+        <a href="index.html#staffsSection" class="nav-btn">
+          <i class="fa-solid fa-users"></i>
+          <span>Staffs</span>
+        </a>
+        <a href="#createdBySection" class="nav-btn">
+          <i class="fa-solid fa-laptop-code"></i>
+          <span>Created By</span>
+        </a>
+        <button class="theme-toggle-btn icon-only-btn" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Toggle Theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Page Header Hero -->
+  <section class="page-hero">
+    <div class="hero-badge-pill">
+      <i class="fa-solid fa-compass"></i>
+      <span>Interactive Virtual Walkthrough &bull; 5 Video Tours</span>
+    </div>
+    <h1 class="page-title">FEAT Library Virtual Tour</h1>
+    <p class="page-subtitle">
+      Explore the comprehensive digital ecosystem, main entrance hub, 100,000+ departmental book stacks,
+      e-journals research lab, and book donation &amp; RO water facility across 5 dedicated virtual tours.
+    </p>
+  </section>
+
+  <!-- Global Options Bar ("in the option is adding") -->
+  <div class="options-bar-wrapper">
+    <div class="options-bar">
+      <!-- Options Left: Filter by Category -->
+      <div class="options-left">
+        <span class="options-label"><i class="fa-solid fa-sliders"></i> Filter Tours:</span>
+        <button class="filter-pill active" data-filter="all" onclick="filterTourCategory('all', this)">
+          <i class="fa-solid fa-layer-group"></i> All Tours (5)
+        </button>
+        <button class="filter-pill" data-filter="full" onclick="filterTourCategory('full', this)">
+          <i class="fa-solid fa-film"></i> Full Library
+        </button>
+        <button class="filter-pill" data-filter="entrance" onclick="filterTourCategory('entrance', this)">
+          <i class="fa-solid fa-door-open"></i> Entrance Hall
+        </button>
+        <button class="filter-pill" data-filter="lab" onclick="filterTourCategory('lab', this)">
+          <i class="fa-solid fa-laptop-code"></i> E-Journals Lab
+        </button>
+        <button class="filter-pill" data-filter="stacks" onclick="filterTourCategory('stacks', this)">
+          <i class="fa-solid fa-book-bookmark"></i> Journals &amp; Volumes
+        </button>
+        <button class="filter-pill" data-filter="amenities" onclick="filterTourCategory('amenities', this)">
+          <i class="fa-solid fa-hand-holding-heart"></i> Book Donation &amp; Water
+        </button>
+      </div>
+
+      <!-- Options Right: Global Video Options Controls -->
+      <div class="options-right">
+        <div class="option-select-group">
+          <label for="globalSpeedSelect" class="option-select-label"><i class="fa-solid fa-gauge-high"></i> Speed:</label>
+          <select id="globalSpeedSelect" class="custom-select" onchange="applyGlobalSpeed(this.value)">
+            <option value="0.75">0.75x</option>
+            <option value="1" selected>1.0x (Normal)</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2.0x</option>
+          </select>
+        </div>
+
+        <button class="option-action-btn" id="autoPauseToggleBtn" onclick="toggleAutoPause()" title="Pause other videos when one plays">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>Auto-Pause: ON</span>
+        </button>
+
+        <button class="option-action-btn" onclick="pauseAllVideos()" title="Pause all playing videos">
+          <i class="fa-solid fa-circle-pause"></i>
+          <span>Pause All</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 Cards Showing with Video -->
+  <main class="tour-content-section">
+    <div class="tour-cards-grid" id="tourCardsGrid">
+
+      <!-- CARD 1: Full Library Comprehensive Walkthrough (Featured) -->
+      <article class="video-card featured-tour-card" data-category="full" id="cardTour1">
+        <div class="card-video-frame">
+          <div class="card-badges-top">
+            <span class="card-category-badge"><i class="fa-solid fa-film"></i> Full Library Tour</span>
+            <span class="card-res-badge">1080p HD &bull; 60 FPS &bull; 2:06</span>
+          </div>
+          <video id="video1" controls playsinline preload="metadata" poster="images/poster-full-library.jpg">
+            <source src="video/full%20library.mp4" type="video/mp4">
+            <source src="video/full library.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+
+        <div class="card-body">
+          <div class="card-info">
+            <div class="card-title-row">
+              <h2 class="card-title"><i class="fa-solid fa-compass"></i> Comprehensive Library Virtual Walkthrough</h2>
+            </div>
+            <p class="card-desc">
+              Complete cinematic 360&deg; architectural walkthrough covering the entire Faculty of Engineering &amp; Technology (FEAT) Library:
+              main entrance foyer, digital e-journals computing lab, quiet study wings, departmental book stacks, and amenities.
+            </p>
+
+            <div class="card-features-list">
+              <span class="card-pill"><i class="fa-solid fa-play"></i> Full 360&deg; Tour</span>
+              <span class="card-pill"><i class="fa-solid fa-building-columns"></i> All Wings Covered</span>
+              <span class="card-pill"><i class="fa-solid fa-book-open"></i> 100k+ Books</span>
+              <span class="card-pill"><i class="fa-solid fa-clock"></i> 2 Min Walkthrough</span>
+            </div>
+          </div>
+
+          <!-- In-Card Options Toolbar -->
+          <div class="card-options-toolbar">
+            <div class="card-options-left">
+              <span class="card-speed-label"><i class="fa-solid fa-gauge-high"></i> Speed:</span>
+              <select class="card-speed-select" onchange="setVideoSpeed('video1', this.value)" aria-label="Playback speed for Full Library Tour">
+                <option value="0.75">0.75x</option>
+                <option value="1" selected>1.0x</option>
+                <option value="1.25">1.25x</option>
+                <option value="1.5">1.5x</option>
+                <option value="2">2.0x</option>
+              </select>
+            </div>
+
+            <div class="card-options-right">
+              <button class="card-btn-option" onclick="toggleVideoLoop('video1', this)" title="Toggle loop replay">
+                <i class="fa-solid fa-repeat"></i> Loop
+              </button>
+              <button class="card-btn-option" onclick="openTheater('video1', 'Comprehensive Library Virtual Walkthrough', 'video/full%20library.mp4', 'Complete 360° architectural walkthrough covering all wings, study halls, and digital facilities of FEAT Library.')" title="Watch in Theater mode">
+                <i class="fa-solid fa-expand"></i> Theater
+              </button>
+              <button class="card-btn-option" onclick="copyVideoLink('cardTour1')" title="Share tour link">
+                <i class="fa-solid fa-share-nodes"></i> Share
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 2: Main Entrance Hall & Circulation Hub -->
+      <article class="video-card" data-category="entrance" id="cardTour2">
+        <div class="card-video-frame">
+          <div class="card-badges-top">
+            <span class="card-category-badge"><i class="fa-solid fa-door-open"></i> Entrance &amp; Hub</span>
+            <span class="card-res-badge">1080p HD &bull; 60 FPS &bull; 1:01</span>
+          </div>
+          <video id="video2" controls playsinline preload="metadata" poster="images/poster-enter-hall.jpg">
+            <source src="video/enter%20hall%20video.mp4" type="video/mp4">
+            <source src="video/enter hall video.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+
+        <div class="card-body">
+          <div class="card-info">
+            <div class="card-title-row">
+              <h2 class="card-title"><i class="fa-solid fa-address-card"></i> Main Entrance Hall &amp; Circulation Hub</h2>
+            </div>
+            <p class="card-desc">
+              Experience the central student entrance foyer, computerized barcode issue &amp; return circulation counters,
+              academic periodicals stands, daily newspapers bay, and faculty helpdesk.
+            </p>
+
+            <div class="card-features-list">
+              <span class="card-pill"><i class="fa-solid fa-id-badge"></i> Smart Gate Registry</span>
+              <span class="card-pill"><i class="fa-solid fa-barcode"></i> Circulation Desk</span>
+              <span class="card-pill"><i class="fa-solid fa-newspaper"></i> Periodicals Stand</span>
+              <span class="card-pill"><i class="fa-solid fa-handshake-angle"></i> Help Desk</span>
+            </div>
+          </div>
+
+          <!-- In-Card Options Toolbar -->
+          <div class="card-options-toolbar">
+            <div class="card-options-left">
+              <span class="card-speed-label"><i class="fa-solid fa-gauge-high"></i> Speed:</span>
+              <select class="card-speed-select" onchange="setVideoSpeed('video2', this.value)" aria-label="Playback speed for Entrance Hall">
+                <option value="0.75">0.75x</option>
+                <option value="1" selected>1.0x</option>
+                <option value="1.25">1.25x</option>
+                <option value="1.5">1.5x</option>
+                <option value="2">2.0x</option>
+              </select>
+            </div>
+
+            <div class="card-options-right">
+              <button class="card-btn-option" onclick="toggleVideoLoop('video2', this)" title="Toggle loop replay">
+                <i class="fa-solid fa-repeat"></i> Loop
+              </button>
+              <button class="card-btn-option" onclick="openTheater('video2', 'Main Entrance Hall & Circulation Hub', 'video/enter%20hall%20video.mp4', 'Foyer walkthrough covering the main entrance checkpoint, circulation desk, and daily periodicals section.')" title="Watch in Theater mode">
+                <i class="fa-solid fa-expand"></i> Theater
+              </button>
+              <button class="card-btn-option" onclick="copyVideoLink('cardTour2')" title="Share tour link">
+                <i class="fa-solid fa-share-nodes"></i> Share
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 3: E-Journals & Internet Computing Lab -->
+      <article class="video-card" data-category="lab" id="cardTour3">
+        <div class="card-video-frame">
+          <div class="card-badges-top">
+            <span class="card-category-badge"><i class="fa-solid fa-laptop-code"></i> E-Journals Lab</span>
+            <span class="card-res-badge">1080p HD &bull; 60 FPS &bull; 0:21</span>
+          </div>
+          <video id="video3" controls playsinline preload="metadata" poster="images/poster-internal-lab.jpg">
+            <source src="video/internal%20lab.mp4" type="video/mp4">
+            <source src="video/internal lab.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+
+        <div class="card-body">
+          <div class="card-info">
+            <div class="card-title-row">
+              <h2 class="card-title"><i class="fa-solid fa-desktop"></i> E-Journals &amp; Internet Computing Lab</h2>
+            </div>
+            <p class="card-desc">
+              Take a walk inside the high-speed air-conditioned Internet laboratory equipped with networked research workstations,
+              direct IEEE &amp; ScienceDirect database query portals, and question paper repositories.
+            </p>
+
+            <div class="card-features-list">
+              <span class="card-pill"><i class="fa-solid fa-wifi"></i> High-Speed LAN</span>
+              <span class="card-pill"><i class="fa-solid fa-network-wired"></i> 50+ Terminals</span>
+              <span class="card-pill"><i class="fa-solid fa-server"></i> OPAC Search</span>
+              <span class="card-pill"><i class="fa-solid fa-snowflake"></i> Climate Controlled</span>
+            </div>
+          </div>
+
+          <!-- In-Card Options Toolbar -->
+          <div class="card-options-toolbar">
+            <div class="card-options-left">
+              <span class="card-speed-label"><i class="fa-solid fa-gauge-high"></i> Speed:</span>
+              <select class="card-speed-select" onchange="setVideoSpeed('video3', this.value)" aria-label="Playback speed for E-Journals Lab">
+                <option value="0.75">0.75x</option>
+                <option value="1" selected>1.0x</option>
+                <option value="1.25">1.25x</option>
+                <option value="1.5">1.5x</option>
+                <option value="2">2.0x</option>
+              </select>
+            </div>
+
+            <div class="card-options-right">
+              <button class="card-btn-option" onclick="toggleVideoLoop('video3', this)" title="Toggle loop replay">
+                <i class="fa-solid fa-repeat"></i> Loop
+              </button>
+              <button class="card-btn-option" onclick="openTheater('video3', 'E-Journals & Internet Computing Lab', 'video/internal%20lab.mp4', 'Comprehensive walkthrough of the computing terminals, OPAC station, and research facilities.')" title="Watch in Theater mode">
+                <i class="fa-solid fa-expand"></i> Theater
+              </button>
+              <button class="card-btn-option" onclick="copyVideoLink('cardTour3')" title="Share tour link">
+                <i class="fa-solid fa-share-nodes"></i> Share
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 4: Journals, Back Volumes & Book Stacks -->
+      <article class="video-card" data-category="stacks" id="cardTour4">
+        <div class="card-video-frame">
+          <div class="card-badges-top">
+            <span class="card-category-badge"><i class="fa-solid fa-book-bookmark"></i> Journals &amp; Volumes</span>
+            <span class="card-res-badge">1080p HD &bull; 60 FPS &bull; 0:28</span>
+          </div>
+          <video id="video4" controls playsinline preload="metadata" poster="images/poster-journals-volumes.jpg">
+            <source src="video/journals%20%26%20back%20volumes.mp4" type="video/mp4">
+            <source src="video/journals & back volumes.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+
+        <div class="card-body">
+          <div class="card-info">
+            <div class="card-title-row">
+              <h2 class="card-title"><i class="fa-solid fa-layer-group"></i> Journals, Back Volumes &amp; Book Stacks</h2>
+            </div>
+            <p class="card-desc">
+              Tour the expansive aisles holding over 100,000 engineering volumes organized by Universal Decimal Classification,
+              bound back volumes of international research journals, and departmental archives.
+            </p>
+
+            <div class="card-features-list">
+              <span class="card-pill"><i class="fa-solid fa-book"></i> 100k+ Volumes</span>
+              <span class="card-pill"><i class="fa-solid fa-boxes-stacked"></i> Bound Back Volumes</span>
+              <span class="card-pill"><i class="fa-solid fa-microchip"></i> Engineering Stacks</span>
+              <span class="card-pill"><i class="fa-solid fa-barcode"></i> Barcoded Catalog</span>
+            </div>
+          </div>
+
+          <!-- In-Card Options Toolbar -->
+          <div class="card-options-toolbar">
+            <div class="card-options-left">
+              <span class="card-speed-label"><i class="fa-solid fa-gauge-high"></i> Speed:</span>
+              <select class="card-speed-select" onchange="setVideoSpeed('video4', this.value)" aria-label="Playback speed for Journals and Book Stacks">
+                <option value="0.75">0.75x</option>
+                <option value="1" selected>1.0x</option>
+                <option value="1.25">1.25x</option>
+                <option value="1.5">1.5x</option>
+                <option value="2">2.0x</option>
+              </select>
+            </div>
+
+            <div class="card-options-right">
+              <button class="card-btn-option" onclick="toggleVideoLoop('video4', this)" title="Toggle loop replay">
+                <i class="fa-solid fa-repeat"></i> Loop
+              </button>
+              <button class="card-btn-option" onclick="openTheater('video4', 'Journals, Back Volumes & Book Stacks', 'video/journals%20%26%20back%20volumes.mp4', 'Detailed walkthrough of the extensive engineering stacks, journal back volumes, and archival reference collections.')" title="Watch in Theater mode">
+                <i class="fa-solid fa-expand"></i> Theater
+              </button>
+              <button class="card-btn-option" onclick="copyVideoLink('cardTour4')" title="Share tour link">
+                <i class="fa-solid fa-share-nodes"></i> Share
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 5: Donated Books Section & RO Water Facility -->
+      <article class="video-card" data-category="amenities" id="cardTour5">
+        <div class="card-video-frame">
+          <div class="card-badges-top">
+            <span class="card-category-badge"><i class="fa-solid fa-hand-holding-heart"></i> Book Donation &amp; Water</span>
+            <span class="card-res-badge">1080p HD &bull; 60 FPS &bull; 0:25</span>
+          </div>
+          <video id="video5" controls playsinline preload="metadata" poster="images/poster-donote-water.jpg">
+            <source src="video/donote%20book%20and%20water%20plant.mp4" type="video/mp4">
+            <source src="video/donote book and water plant.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+
+        <div class="card-body">
+          <div class="card-info">
+            <div class="card-title-row">
+              <h2 class="card-title"><i class="fa-solid fa-faucet-drip"></i> Donated Books &amp; RO Water Facility</h2>
+            </div>
+            <p class="card-desc">
+              Explore the student book donation repository facilitating knowledge sharing, alongside essential amenities
+              including hygienic purified RO drinking water dispensers and student convenience bays.
+            </p>
+
+            <div class="card-features-list">
+              <span class="card-pill"><i class="fa-solid fa-book-medical"></i> Book Donation Bay</span>
+              <span class="card-pill"><i class="fa-solid fa-glass-water"></i> RO Water Plant</span>
+              <span class="card-pill"><i class="fa-solid fa-hand-holding-hand"></i> Student Sharing</span>
+              <span class="card-pill"><i class="fa-solid fa-shield-heart"></i> Clean &amp; Maintained</span>
+            </div>
+          </div>
+
+          <!-- In-Card Options Toolbar -->
+          <div class="card-options-toolbar">
+            <div class="card-options-left">
+              <span class="card-speed-label"><i class="fa-solid fa-gauge-high"></i> Speed:</span>
+              <select class="card-speed-select" onchange="setVideoSpeed('video5', this.value)" aria-label="Playback speed for Book Donation and Water Facility">
+                <option value="0.75">0.75x</option>
+                <option value="1" selected>1.0x</option>
+                <option value="1.25">1.25x</option>
+                <option value="1.5">1.5x</option>
+                <option value="2">2.0x</option>
+              </select>
+            </div>
+
+            <div class="card-options-right">
+              <button class="card-btn-option" onclick="toggleVideoLoop('video5', this)" title="Toggle loop replay">
+                <i class="fa-solid fa-repeat"></i> Loop
+              </button>
+              <button class="card-btn-option" onclick="openTheater('video5', 'Donated Books Section & RO Water Facility', 'video/donote%20book%20and%20water%20plant.mp4', 'Walkthrough of the student book donation repository and hygienic RO drinking water plant facility.')" title="Watch in Theater mode">
+                <i class="fa-solid fa-expand"></i> Theater
+              </button>
+              <button class="card-btn-option" onclick="copyVideoLink('cardTour5')" title="Share tour link">
+                <i class="fa-solid fa-share-nodes"></i> Share
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- Theater Focus Mode Modal -->
+  <div class="theater-modal" id="theaterModal" role="dialog" aria-modal="true" aria-labelledby="theaterTitle">
+    <div class="theater-modal-content">
+      <div class="theater-header">
+        <h3 id="theaterTitle"><i class="fa-solid fa-clapperboard"></i> Virtual Tour Player</h3>
+        <button class="theater-close-btn" onclick="closeTheater()" aria-label="Close Theater Player">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="theater-video-wrapper">
+        <video id="theaterVideo" controls playsinline autoplay>
+          <source src="" type="video/mp4">
+        </video>
+      </div>
+      <div class="theater-footer">
+        <p class="theater-footer-desc" id="theaterDesc">Experience our interactive high-definition library tour.</p>
+        <button class="option-action-btn" onclick="toggleTheaterFullscreen()">
+          <i class="fa-solid fa-expand"></i> Fullscreen
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Pop-up -->
+  <div class="toast-notice" id="toastNotice">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toastMsg">Action completed successfully.</span>
+  </div>
+
+  <!-- Created By Section -->
+  <section class="section-container" id="createdBySection">
+    <h2 class="section-title">Created By</h2>
+    <p class="section-subtitle">Meet the creator (Batch: 2024–2027) behind the Annamalai University FEAT Library Virtual Tour &amp; Media Documentation.</p>
+
+    <div class="creator-toggle-wrap">
+      <button class="creator-toggle" id="creatorToggleBtn" type="button" onclick="toggleCreatedBy()"
+        aria-controls="creatorGrid" aria-expanded="false">
+        <i class="fa-solid fa-eye"></i> Show Created By
+      </button>
+    </div>
+
+    <div class="creator-grid is-hidden" id="creatorGrid">
+      <!-- Dharunkumar -->
+      <article class="creator-card">
+        <div class="creator-card-img-wrap">
+          <img src="new image/web/dharunkumar.jpg" alt="Dharunkumar" onerror="this.src='new image/dharunkumar.jpeg'">
+          <div class="creator-img-overlay"></div>
+          <div class="creator-pill-badge">
+            <i class="fa-solid fa-video"></i> Virtual Tour Creator
+          </div>
+        </div>
+        <div class="creator-card-content">
+          <div class="creator-header-meta">
+            <h3 class="creator-name"><i class="fa-solid fa-camera-retro"></i> Dharunkumar</h3>
+            <span class="creator-dept-tag">Dept. of Computer Science &amp; Engineering</span>
+            <span class="creator-batch"><i class="fa-solid fa-graduation-cap"></i> Batch: 2024–2027</span>
+          </div>
+          <p class="creator-bio">Produced the comprehensive 360&deg; library virtual tour, interactive high-resolution gallery, visual walkthrough documentation, and digital facility experience.</p>
+          
+          <div class="creator-card-footer">
+            <span class="creator-affiliation">
+              <i class="fa-solid fa-building-columns"></i> FEAT &bull; Annamalai University
+            </span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="index.html"><i class="fa-solid fa-house"></i> Main Portal</a>
+      <a href="index.html#staffsSection"><i class="fa-solid fa-users"></i> Library Staffs</a>
+      <a href="#createdBySection"><i class="fa-solid fa-laptop-code"></i> Created By</a>
+      <a href="index.html#videoTourSection"><i class="fa-solid fa-video"></i> Featured Tour</a>
+      <a href="gallery.html"><i class="fa-solid fa-images"></i> All 10 Library Photos</a>
+      <a href="index.html#contactSection"><i class="fa-solid fa-envelope"></i> Department Help Desk</a>
+    </div>
+    <p>&copy; 2026 Faculty of Engineering and Technology (FEAT), Annamalai University. All rights reserved.</p>
+  </footer>
+
+  <!-- Script for Interactive Options, Video Control, Theme & Filters -->
+  <script>
+    // Toggle Created By Section visibility
+    function toggleCreatedBy() {
+      const creatorGrid = document.getElementById('creatorGrid');
+      const toggleButton = document.getElementById('creatorToggleBtn');
+      if (!creatorGrid || !toggleButton) return;
+      const isHidden = creatorGrid.classList.toggle('is-hidden');
+
+      toggleButton.setAttribute('aria-expanded', String(!isHidden));
+      toggleButton.innerHTML = isHidden
+        ? '<i class="fa-solid fa-eye"></i> Show Created By'
+        : '<i class="fa-solid fa-eye-slash"></i> Hide Created By';
+    }
+
+    // Auto-reveal if navigated via #createdBySection link
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.location.hash === '#createdBySection') {
+        const creatorGrid = document.getElementById('creatorGrid');
+        if (creatorGrid && creatorGrid.classList.contains('is-hidden')) {
+          toggleCreatedBy();
+        }
+      }
+    });
+    window.addEventListener('hashchange', () => {
+      if (window.location.hash === '#createdBySection') {
+        const creatorGrid = document.getElementById('creatorGrid');
+        if (creatorGrid && creatorGrid.classList.contains('is-hidden')) {
+          toggleCreatedBy();
+        }
+      }
+    });
+    // State management
+    let autoPauseEnabled = true;
+
+    // Theme Management synced with localStorage
+    function toggleTheme() {
+      const body = document.body;
+      const themeBtn = document.getElementById('themeToggleBtn');
+      const currentTheme = body.getAttribute('data-theme');
+
+      if (currentTheme === 'dark') {
+        body.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+        if (themeBtn) themeBtn.innerHTML = `<i class="fa-solid fa-moon"></i>`;
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        if (themeBtn) themeBtn.innerHTML = `<i class="fa-solid fa-sun"></i>`;
+      }
+    }
+
+    // Initialize Theme
+    (function initTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        document.body.setAttribute('data-theme', savedTheme);
+        const themeBtn = document.getElementById('themeToggleBtn');
+        if (themeBtn) {
+          themeBtn.innerHTML = savedTheme === 'dark' ? `<i class="fa-solid fa-sun"></i>` : `<i class="fa-solid fa-moon"></i>`;
+        }
+      }
+    })();
+
+    // Auto-Pause other videos when one starts playing
+    const allVideos = document.querySelectorAll('video');
+    allVideos.forEach((vid) => {
+      vid.addEventListener('play', () => {
+        if (!autoPauseEnabled) return;
+        allVideos.forEach((otherVid) => {
+          if (otherVid !== vid && !otherVid.paused) {
+            otherVid.pause();
+          }
+        });
+      });
+    });
+
+    // Option: Set Speed for specific video
+    function setVideoSpeed(videoId, speedVal) {
+      const vid = document.getElementById(videoId);
+      if (vid) {
+        vid.playbackRate = parseFloat(speedVal);
+        showToast(`Playback speed set to ${speedVal}x`);
+      }
+    }
+
+    // Option: Apply speed globally to all 5 video cards
+    function applyGlobalSpeed(speedVal) {
+      const rate = parseFloat(speedVal);
+      allVideos.forEach((vid) => {
+        vid.playbackRate = rate;
+      });
+      // Synchronize in-card selectors
+      document.querySelectorAll('.card-speed-select').forEach((sel) => {
+        sel.value = speedVal;
+      });
+      showToast(`All videos set to ${speedVal}x speed`);
+    }
+
+    // Option: Toggle Video Loop
+    function toggleVideoLoop(videoId, btnEl) {
+      const vid = document.getElementById(videoId);
+      if (!vid) return;
+      vid.loop = !vid.loop;
+      btnEl.classList.toggle('is-active', vid.loop);
+      showToast(vid.loop ? 'Video loop: ENABLED' : 'Video loop: DISABLED');
+    }
+
+    // Option: Pause all videos
+    function pauseAllVideos() {
+      allVideos.forEach((v) => v.pause());
+      showToast('All videos paused');
+    }
+
+    // Option: Toggle Auto-Pause feature
+    function toggleAutoPause() {
+      autoPauseEnabled = !autoPauseEnabled;
+      const btn = document.getElementById('autoPauseToggleBtn');
+      if (autoPauseEnabled) {
+        btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>Auto-Pause: ON</span>`;
+        btn.style.color = '';
+        showToast('Auto-Pause is now ON');
+      } else {
+        btn.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> <span>Auto-Pause: OFF</span>`;
+        btn.style.color = 'var(--accent-gold)';
+        showToast('Auto-Pause is now OFF (Multiple videos can play)');
+      }
+    }
+
+    // Option: Filter 5 cards by category
+    function filterTourCategory(category, buttonEl) {
+      document.querySelectorAll('.filter-pill').forEach((btn) => btn.classList.remove('active'));
+      buttonEl.classList.add('active');
+
+      const cards = document.querySelectorAll('.video-card');
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const cardCat = card.getAttribute('data-category');
+        if (category === 'all' || cardCat === category) {
+          card.classList.remove('is-hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('is-hidden');
+          const video = card.querySelector('video');
+          if (video && !video.paused) video.pause();
+        }
+      });
+
+      showToast(`Showing ${visibleCount} tour card${visibleCount === 1 ? '' : 's'}`);
+    }
+
+    // Option: Theater Focus Mode
+    function openTheater(sourceVideoId, title, videoSrc, desc) {
+      const modal = document.getElementById('theaterModal');
+      const theaterVid = document.getElementById('theaterVideo');
+      const theaterTitle = document.getElementById('theaterTitle');
+      const theaterDesc = document.getElementById('theaterDesc');
+
+      // Pause existing source video
+      const origVid = document.getElementById(sourceVideoId);
+      let currentTime = 0;
+      if (origVid) {
+        currentTime = origVid.currentTime;
+        origVid.pause();
+      }
+
+      theaterVid.src = (origVid && origVid.currentSrc) ? origVid.currentSrc : (videoSrc || 'video/full%20library.mp4');
+      if (origVid && origVid.poster) theaterVid.poster = origVid.poster;
+      theaterVid.currentTime = currentTime;
+      theaterTitle.innerHTML = `<i class="fa-solid fa-clapperboard"></i> ${title}`;
+      theaterDesc.textContent = desc;
+
+      modal.classList.add('is-open');
+      theaterVid.play().catch(() => {});
+    }
+
+    function closeTheater() {
+      const modal = document.getElementById('theaterModal');
+      const theaterVid = document.getElementById('theaterVideo');
+      theaterVid.pause();
+      theaterVid.src = '';
+      modal.classList.remove('is-open');
+    }
+
+    function toggleTheaterFullscreen() {
+      const theaterVid = document.getElementById('theaterVideo');
+      if (theaterVid.requestFullscreen) {
+        theaterVid.requestFullscreen();
+      } else if (theaterVid.webkitRequestFullscreen) {
+        theaterVid.webkitRequestFullscreen();
+      }
+    }
+
+    // Close theater on Escape or clicking outside
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeTheater();
+    });
+
+    document.getElementById('theaterModal').addEventListener('click', (e) => {
+      if (e.target.id === 'theaterModal') closeTheater();
+    });
+
+    // Option: Copy Direct Link
+    function copyVideoLink(cardId) {
+      const url = `${window.location.origin}${window.location.pathname}#${cardId}`;
+      navigator.clipboard.writeText(url).then(() => {
+        showToast('Direct tour link copied to clipboard!');
+      }).catch(() => {
+        showToast('Tour link: ' + url);
+      });
+    }
+
+    // Toast Notifications Helper
+    let toastTimeout;
+    function showToast(message) {
+      const toast = document.getElementById('toastNotice');
+      const msg = document.getElementById('toastMsg');
+      msg.textContent = message;
+      toast.classList.add('is-visible');
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('is-visible');
+      }, 2600);
+    }
+  </script>
+</body>
+
+</html>

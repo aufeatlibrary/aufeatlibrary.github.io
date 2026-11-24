@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Annamalai University FEAT Library |Complete Photo Gallery </title>
+<link rel="icon" href="new image/logo.png">
+  <!-- Google Fonts & FontAwesome -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-body: #0b0f19;
+      --bg-nav: rgba(11, 15, 25, 0.88);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --card-bg: rgba(23, 32, 54, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover-border: rgba(56, 189, 248, 0.4);
+      --card-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+      --primary: #38bdf8;
+      --primary-hover: #0284c7;
+      --primary-glow: rgba(56, 189, 248, 0.25);
+      --accent-gold: #fbbf24;
+      --accent-green: #34d399;
+      --glass-bg: rgba(255, 255, 255, 0.04);
+      --badge-bg: rgba(11, 15, 25, 0.85);
+      --input-bg: rgba(15, 23, 42, 0.7);
+    }
+
+    [data-theme="light"] {
+      --bg-body: #f8fafc;
+      --bg-nav: rgba(255, 255, 255, 0.92);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --card-bg: #ffffff;
+      --card-border: rgba(0, 0, 0, 0.08);
+      --card-hover-border: rgba(2, 132, 199, 0.45);
+      --card-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --primary-glow: rgba(2, 132, 199, 0.15);
+      --accent-gold: #d97706;
+      --accent-green: #059669;
+      --glass-bg: rgba(0, 0, 0, 0.03);
+      --badge-bg: rgba(255, 255, 255, 0.9);
+      --input-bg: #f1f5f9;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.65;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.1rem 5%;
+      background-color: var(--bg-nav);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .brand-logo {
+      color: var(--text-main);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .brand-logo-img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(56, 189, 248, 0.3));
+    }
+
+    .brand-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-btn,
+    .theme-toggle-btn {
+      background: var(--glass-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 0.55rem 1.2rem;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .nav-btn:hover,
+    .theme-toggle-btn:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 14px var(--primary-glow);
+    }
+
+    .nav-btn.active {
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 4px 15px var(--primary-glow);
+    }
+
+    .icon-only-btn {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    /* Page Hero */
+    .gallery-hero {
+      padding: 3.5rem 1.5rem 2.2rem;
+      text-align: center;
+      position: relative;
+      background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.18), transparent 70%);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--primary);
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      margin-bottom: 1rem;
+    }
+
+    .gallery-hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, var(--text-main) 40%, var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.6rem;
+    }
+
+    .gallery-hero p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 720px;
+      margin: 0 auto 1.8rem;
+      line-height: 1.6;
+    }
+
+    .hero-stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .stat-pill {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 0.5rem 1.1rem;
+      border-radius: 50px;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .stat-pill strong {
+      color: var(--primary);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* Controls Bar */
+    .controls-wrapper {
+      max-width: 1300px;
+      margin: 2.5rem auto 1.5rem;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .filter-tabs-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-btn {
+      background: var(--glass-bg);
+      color: var(--text-muted);
+      border: 1px solid var(--card-border);
+      padding: 0.55rem 1.15rem;
+      border-radius: 30px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      color: var(--text-main);
+      border-color: var(--primary);
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    .filter-btn.active {
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 4px 14px var(--primary-glow);
+    }
+
+    .filter-count {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 1px 7px;
+      border-radius: 10px;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+
+    .search-and-view {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      position: relative;
+      min-width: 260px;
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      pointer-events: none;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 0.55rem 1rem 0.55rem 2.4rem;
+      background: var(--input-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 30px;
+      color: var(--text-main);
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    .search-box input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .grid-view-toggle {
+      display: flex;
+      background: var(--glass-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 30px;
+      padding: 3px;
+    }
+
+    .view-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+
+    .view-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 2px 8px var(--primary-glow);
+    }
+
+    /* Gallery Grid */
+    .gallery-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .gallery-grid.grid-cols-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .gallery-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .gallery-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--card-hover-border);
+      box-shadow: 0 20px 42px rgba(0, 0, 0, 0.28);
+    }
+
+    .gallery-card.is-hidden {
+      display: none !important;
+    }
+
+    .card-media {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      overflow: hidden;
+      background: rgba(15, 23, 42, 0.4);
+    }
+
+    [data-theme="light"] .card-media {
+      background: #e2e8f0;
+    }
+
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .gallery-card:hover .card-media img {
+      transform: scale(1.06);
+    }
+
+    .card-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--badge-bg);
+      color: var(--primary);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 20px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      z-index: 2;
+    }
+
+    .card-overlay-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--badge-bg);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.88rem;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.25s ease;
+      z-index: 2;
+      border: 1px solid var(--card-border);
+    }
+
+    .gallery-card:hover .card-overlay-btn {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .gallery-card:hover .card-overlay-btn:hover {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .card-body {
+      padding: 1.25rem 1.35rem 1.35rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+      line-height: 1.35;
+    }
+
+    .card-desc {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--card-border);
+      padding-top: 0.75rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .card-footer-action {
+      color: var(--primary);
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .card-footer-action i {
+      transition: transform 0.2s ease;
+    }
+
+    .gallery-card:hover .card-footer-action i {
+      transform: translateX(3px);
+    }
+
+    /* Empty state */
+    .empty-state {
+      display: none;
+      text-align: center;
+      padding: 4rem 1.5rem;
+      color: var(--text-muted);
+      grid-column: 1 / -1;
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      opacity: 0.6;
+    }
+
+    .empty-state h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Lightbox Modal */
+    .lightbox-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 12, 22, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 3000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .lightbox-modal.is-active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: 94vw;
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: zoomIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes zoomIn {
+      from {
+        opacity: 0;
+        transform: scale(0.94);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .lightbox-img-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 100%;
+    }
+
+    .lightbox-content img {
+      max-width: 100%;
+      max-height: 74vh;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .lightbox-caption {
+      margin-top: 14px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #ffffff;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .lightbox-info {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .lightbox-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: block;
+    }
+
+    .lightbox-desc {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      margin-top: 2px;
+      display: block;
+    }
+
+    .lightbox-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .lightbox-counter {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 5px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .lightbox-download-btn {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .lightbox-download-btn:hover {
+      background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(2, 132, 199, 0.55);
+    }
+
+    .lightbox-close-btn {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(30, 41, 59, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #ffffff;
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 10;
+    }
+
+    .lightbox-close-btn:hover {
+      background: #ef4444;
+      border-color: #ef4444;
+      color: #ffffff;
+      transform: scale(1.12);
+      box-shadow: 0 8px 22px rgba(239, 68, 68, 0.45);
+    }
+
+    .lightbox-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #ffffff;
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      z-index: 10;
+    }
+
+    .lightbox-nav-btn:hover {
+      background: var(--primary);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .lightbox-prev-btn {
+      left: 24px;
+    }
+
+    .lightbox-next-btn {
+      right: 24px;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--bg-nav);
+      border-top: 1px solid var(--card-border);
+      color: var(--text-muted);
+      text-align: center;
+      padding: 2.2rem 1rem;
+      margin-top: auto;
+      font-size: 0.9rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.86rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .gallery-grid.grid-cols-4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0.9rem 1rem;
+      }
+
+      .gallery-hero h1 {
+        font-size: 2rem;
+      }
+
+      .gallery-grid,
+      .gallery-grid.grid-cols-4 {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .filter-tabs-container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .search-and-view {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .search-box {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .search-box input {
+        font-size: 16px;
+      }
+
+      .lightbox-nav-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+      }
+
+      .lightbox-prev-btn {
+        left: 10px;
+      }
+
+      .lightbox-next-btn {
+        right: 10px;
+      }
+
+      .lightbox-close-btn {
+        top: 14px;
+        right: 14px;
+        width: 38px;
+        height: 38px;
+      }
+    }
+  </style>
+</head>
+
+<body data-theme="dark">
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="brand-logo" title="Back to FEAT Library Portal">
+      <img src="new image/logo.png" alt="Annamalai University Logo" class="brand-logo-img">
+      <div>
+        <span>Annamalai University</span>
+        <span class="brand-pill">FEAT Library</span>
+      </div>
+    </a>
+
+    <div class="nav-actions">
+      <a href="index.html" class="nav-btn">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Home Portal</span>
+      </a>
+      <a href="index.html#staffsSection" class="nav-btn">
+        <i class="fa-solid fa-users"></i>
+        <span>Staffs</span>
+      </a>
+      <a href="virtual-tour.html" class="nav-btn">
+        <i class="fa-solid fa-video"></i>
+        <span>Virtual Tours</span>
+      </a>
+      <button class="theme-toggle-btn icon-only-btn" id="themeToggleBtn" onclick="toggleTheme()"
+        aria-label="Toggle Theme">
+        <i class="fa-solid fa-sun"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Gallery Hero -->
+  <header class="gallery-hero">
+    <div class="hero-badge">
+      <i class="fa-solid fa-camera"></i>
+      <span>Complete Photographic Archive &bull; FEAT Engineering Library</span>
+    </div>
+
+    <h1>Faculty of Engineering &amp; Technology Gallery</h1>
+    <p>Explore all 19 authentic, high-definition photographs of our air-conditioned reading halls, high-speed digital research
+      computing labs, book bank, circulation hub, and departmental engineering archives.</p>
+
+    <div class="hero-stats-row">
+      <div class="stat-pill"><i class="fa-solid fa-image" style="color:var(--primary);"></i> <strong>19</strong> High-Res Photos</div>
+      <div class="stat-pill"><i class="fa-solid fa-building" style="color:var(--accent-gold);"></i> <strong>5</strong> Main Facility Categories</div>
+      <div class="stat-pill"><i class="fa-solid fa-book" style="color:var(--accent-green);"></i> <strong>100,000+</strong> Book Volume Stacks</div>
+      <div class="stat-pill"><i class="fa-solid fa-expand" style="color:var(--primary);"></i> <strong>4K+</strong> Full-Screen Lightbox View</div>
+    </div>
+  </header>
+
+  <!-- Controls Bar -->
+  <section class="controls-wrapper">
+    <div class="filter-tabs-container">
+      <div class="filter-tabs" id="filterTabs">
+        <button class="filter-btn active" data-filter="all" onclick="applyCategoryFilter('all', this)">
+          <i class="fa-solid fa-border-all"></i>
+          <span>All Photos</span>
+          <span class="filter-count" id="countAll">19</span>
+        </button>
+        <button class="filter-btn" data-filter="study" onclick="applyCategoryFilter('study', this)">
+          <i class="fa-solid fa-chair"></i>
+          <span>Reading &amp; Study Halls</span>
+          <span class="filter-count">5</span>
+        </button>
+        <button class="filter-btn" data-filter="stacks" onclick="applyCategoryFilter('stacks', this)">
+          <i class="fa-solid fa-book"></i>
+          <span>Book Stacks &amp; Aisles</span>
+          <span class="filter-count">7</span>
+        </button>
+        <button class="filter-btn" data-filter="lab" onclick="applyCategoryFilter('lab', this)">
+          <i class="fa-solid fa-laptop"></i>
+          <span>E-Journals &amp; Digital Lab</span>
+          <span class="filter-count">2</span>
+        </button>
+        <button class="filter-btn" data-filter="reception" onclick="applyCategoryFilter('reception', this)">
+          <i class="fa-solid fa-landmark"></i>
+          <span>Reception &amp; Circulation</span>
+          <span class="filter-count">3</span>
+        </button>
+        <button class="filter-btn" data-filter="facility" onclick="applyCategoryFilter('facility', this)">
+          <i class="fa-solid fa-hand-holding-heart"></i>
+          <span>Amenities &amp; Facility</span>
+          <span class="filter-count">2</span>
+        </button>
+      </div>
+
+      <div class="search-and-view">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="gallerySearchInput" placeholder="Search facilities or titles..." oninput="applySearchFilter()">
+        </div>
+
+        <div class="grid-view-toggle">
+          <button class="view-btn active" id="view3Btn" onclick="setGridColumns(3)" title="3 Columns View">
+            <i class="fa-solid fa-table-cells"></i>
+          </button>
+          <button class="view-btn" id="view4Btn" onclick="setGridColumns(4)" title="4 Columns View">
+            <i class="fa-solid fa-table-cells-large"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Grid Container -->
+  <main class="gallery-container">
+    <div class="gallery-grid" id="allGalleryGrid">
+      <!-- Cards dynamically rendered by JavaScript -->
+    </div>
+
+    <div class="empty-state" id="emptyState">
+      <i class="fa-solid fa-folder-open"></i>
+      <h3>No Photos Match Your Search</h3>
+      <p>Try searching for keywords like "reading", "stacks", "computer", or "circulation".</p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="index.html">Home Portal</a>
+        <a href="index.html#aboutSection">About University</a>
+        <a href="index.html#visionSection">Vision &amp; Mission</a>
+        <a href="index.html#staffsSection">Library Staffs</a>
+        <a href="virtual-tour.html#createdBySection">Created By</a>
+        <a href="virtual-tour.html">Virtual Video Tour</a>
+        <a href="index.html#contactSection">Contact Help Desk</a>
+      </div>
+      <p>&copy; 2026 Department of Computer Science &amp; Engineering &bull; Faculty of Engineering &amp; Technology, Annamalai University.</p>
+    </div>
+  </footer>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox-modal" id="lightboxModal" role="dialog" aria-modal="true" aria-label="Image Preview">
+    <button class="lightbox-close-btn" onclick="closeLightbox()" aria-label="Close image preview" title="Close Preview (Esc)">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <button class="lightbox-nav-btn lightbox-prev-btn" onclick="prevImage()" aria-label="Previous image" title="Previous photo (Left arrow)">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <button class="lightbox-nav-btn lightbox-next-btn" onclick="nextImage()" aria-label="Next image" title="Next photo (Right arrow)">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
+    <div class="lightbox-content">
+      <div class="lightbox-img-wrapper">
+        <img id="lightboxImg" src="" alt="FEAT Library full preview">
+      </div>
+      <div class="lightbox-caption">
+        <div class="lightbox-info">
+          <span class="lightbox-title" id="lightboxTitle"></span>
+          <span class="lightbox-desc" id="lightboxDesc"></span>
+        </div>
+        <div class="lightbox-actions">
+          <span class="lightbox-counter" id="lightboxCounter">1 / 19</span>
+          <a href="#" id="lightboxDownloadBtn" target="_blank" download class="lightbox-download-btn" title="Download original high-resolution photo">
+            <i class="fa-solid fa-download"></i>
+            <span>Download High-Res</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // All 19 unique authentic Library Photos from the new image/web/full folder
+    const allGalleryItems = [
+      {
+        id: 0,
+        thumb: 'new image/web/thumbs/air%20hall%20by%20alumni%20donote%20batch%201975.jpg',
+        full: 'new image/web/full/air%20hall%20by%20alumni%20donote%20batch%201975.jpg',
+        title: 'Air-Conditioned Reading Hall (Donated by Alumni Batch 1975)',
+        category: 'study',
+        tag: 'Alumni Batch 1975',
+        desc: 'Special climate-controlled reading hall proudly contributed & donated by the FEAT Alumni Batch of 1975, equipped with air conditioning, wooden acoustic wall panels, and quiet study desks.'
+      },
+      {
+        id: 1,
+        thumb: 'new image/web/thumbs/air%20hall%202.jpg',
+        full: 'new image/web/full/air%20hall%202.jpg',
+        title: 'AC Reading Hall Study Desks',
+        category: 'study',
+        tag: 'Study Desks',
+        desc: 'Spacious, partitioned individual scholar desks arranged in the air-conditioned hall for deep study.'
+      },
+      {
+        id: 2,
+        thumb: 'new image/web/thumbs/main%20study%20hall.jpg',
+        full: 'new image/web/full/main%20study%20hall.jpg',
+        title: 'Air-Conditioned Central Reading Hall',
+        category: 'study',
+        tag: 'Central Hall',
+        desc: 'Spacious, naturally lit reading hall featuring extensive seating for engineering students and researchers.'
+      },
+      {
+        id: 3,
+        thumb: 'new image/web/thumbs/group%20duscision%20area.jpg',
+        full: 'new image/web/full/group%20duscision%20area.jpg',
+        title: 'Group Discussion & Collaborative Study Area',
+        category: 'study',
+        tag: 'Group Discussion',
+        desc: 'Specialized discussion area allowing collaborative teamwork, peer tutoring, and technical project planning.'
+      },
+      {
+        id: 4,
+        thumb: 'new image/web/thumbs/group%20dusscision.jpg',
+        full: 'new image/web/full/group%20dusscision.jpg',
+        title: 'Group Study & Consultation Bay',
+        category: 'study',
+        tag: 'Consultation Bay',
+        desc: 'Comfortable seating zone adjacent to faculty reference collections for interactive group learning.'
+      },
+      {
+        id: 5,
+        thumb: 'new image/web/thumbs/internal%20lab%20in%20library%20(1).jpg',
+        full: 'new image/web/full/internal%20lab%20in%20library%20(1).jpg',
+        title: 'E-Journals & Computing Lab (Workstations)',
+        category: 'lab',
+        tag: 'Digital Lab',
+        desc: 'Networked computing terminals with direct access to IEEE, ScienceDirect, Delnet, and digital archives.'
+      },
+      {
+        id: 6,
+        thumb: 'new image/web/thumbs/internal%20lab%20in%20library%20(2).jpg',
+        full: 'new image/web/full/internal%20lab%20in%20library%20(2).jpg',
+        title: 'E-Journals Research & Query Terminals',
+        category: 'lab',
+        tag: 'Research Portals',
+        desc: 'High-speed Internet terminals configured for technical literature review, OPAC catalog queries, and online exams.'
+      },
+      {
+        id: 7,
+        thumb: 'new image/web/thumbs/student%20book%20entry.jpeg',
+        full: 'new image/web/full/student%20book%20entry.jpeg',
+        title: 'Automated RFID Self-Service Book Issue & Return Kiosk',
+        category: 'reception',
+        tag: 'Self-Issue & Return',
+        desc: 'Smart self-service circulation kiosk enabling students to independently borrow books to take home, return borrowed titles, renew lending periods, and receive instant printed transaction receipts.'
+      },
+      {
+        id: 8,
+        thumb: 'new image/web/thumbs/student%20book%20entry%202.jpeg',
+        full: 'new image/web/full/student%20book%20entry%202.jpeg',
+        title: 'Self-Service Circulation Touchscreen Console (Issue, Return & Renew)',
+        category: 'reception',
+        tag: 'Touchscreen Portal',
+        desc: 'Interactive digital touchscreen console showing direct options for Book Issue (take home), Book Return, Loan Renewal, and Student Account status with integrated RFID card scanning and receipt printing.'
+      },
+      {
+        id: 9,
+        thumb: 'new image/web/thumbs/book%20billing%20count.jpg',
+        full: 'new image/web/full/book%20billing%20count.jpg',
+        title: 'Main Circulation & Book Issue/Return Counter',
+        category: 'reception',
+        tag: 'Circulation Desk',
+        desc: 'Computerized circulation service desk for fast book issues, returns, renewals, and catalog queries.'
+      },
+      {
+        id: 10,
+        thumb: 'new image/web/thumbs/book%20reck.jpg',
+        full: 'new image/web/full/book%20reck.jpg',
+        title: 'Computer Science & IT Book Stacks',
+        category: 'stacks',
+        tag: 'CSE & IT Stacks',
+        desc: 'Extensive stacks housing algorithms, AI/ML, cloud computing, cybersecurity, and software engineering.'
+      },
+      {
+        id: 11,
+        thumb: 'new image/web/thumbs/book%20reck%202.jpg',
+        full: 'new image/web/full/book%20reck%202.jpg',
+        title: 'Mechanical & Civil Engineering Book Stacks',
+        category: 'stacks',
+        tag: 'Mech & Civil',
+        desc: 'Core engineering collections for thermodynamics, structural design, fluid mechanics, and manufacturing.'
+      },
+      {
+        id: 12,
+        thumb: 'new image/web/thumbs/book%20reck%20(1).jpg',
+        full: 'new image/web/full/book%20reck%20(1).jpg',
+        title: 'Departmental Book Stacks (Aisle 1)',
+        category: 'stacks',
+        tag: 'Stack Aisle 1',
+        desc: 'Systematically organized open-access book aisles classified by Universal Decimal Classification.'
+      },
+      {
+        id: 13,
+        thumb: 'new image/web/thumbs/book%20reck%20(2).jpg',
+        full: 'new image/web/full/book%20reck%20(2).jpg',
+        title: 'Departmental Book Stacks (Aisle 2)',
+        category: 'stacks',
+        tag: 'Stack Aisle 2',
+        desc: 'Standard engineering textbooks and reference handbooks neatly labeled with call numbers.'
+      },
+      {
+        id: 14,
+        thumb: 'new image/web/thumbs/book%20reck%20(3).jpg',
+        full: 'new image/web/full/book%20reck%20(3).jpg',
+        title: 'Departmental Book Stacks (Aisle 3)',
+        category: 'stacks',
+        tag: 'Stack Aisle 3',
+        desc: 'Spacious aisles offering easy navigation through electrical, electronics, and chemical engineering stacks.'
+      },
+      {
+        id: 15,
+        thumb: 'new image/web/thumbs/book%20reck%20(4).jpg',
+        full: 'new image/web/full/book%20reck%20(4).jpg',
+        title: 'Departmental Book Stacks (Aisle 4)',
+        category: 'stacks',
+        tag: 'Stack Aisle 4',
+        desc: 'Archival stacks including bound back volumes of prestigious national and international journals.'
+      },
+      {
+        id: 16,
+        thumb: 'new image/web/thumbs/book%20reck%20(5).jpg',
+        full: 'new image/web/full/book%20reck%20(5).jpg',
+        title: 'Departmental Book Stacks (Aisle 5)',
+        category: 'stacks',
+        tag: 'Stack Aisle 5',
+        desc: 'Advanced research monographs, conference proceedings, and specialized postgraduate resources.'
+      },
+      {
+        id: 17,
+        thumb: 'new image/web/thumbs/water%20plant%20in%20library.jpg',
+        full: 'new image/web/full/water%20plant%20in%20library.jpg',
+        title: 'Purified RO Drinking Water Plant Facility',
+        category: 'facility',
+        tag: 'RO Water Facility',
+        desc: 'Hygienic multi-stage reverse osmosis purified and chilled drinking water station for scholars.'
+      },
+      {
+        id: 18,
+        thumb: 'new image/web/thumbs/library%20in%20saraswati%20%20god.jpg',
+        full: 'new image/web/full/library%20in%20saraswati%20%20god.jpg',
+        title: 'Goddess Saraswati Shrine & Auspicious Foyer',
+        category: 'facility',
+        tag: 'Library Shrine',
+        desc: 'Dedicated Goddess Saraswati shrine placed gracefully in the library entrance honoring wisdom and learning.'
+      }
+    ];
+
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let currentLightboxIndex = 0;
+    let visibleItems = [...allGalleryItems];
+
+    // Render cards
+    function renderGallery() {
+      const grid = document.getElementById('allGalleryGrid');
+      const emptyState = document.getElementById('emptyState');
+      grid.innerHTML = '';
+
+      visibleItems = allGalleryItems.filter(item => {
+        const matchesCat = (currentFilter === 'all' || item.category === currentFilter);
+        const matchesSearch = !searchQuery ||
+          item.title.toLowerCase().includes(searchQuery) ||
+          item.desc.toLowerCase().includes(searchQuery) ||
+          item.tag.toLowerCase().includes(searchQuery);
+        return matchesCat && matchesSearch;
+      });
+
+      if (visibleItems.length === 0) {
+        emptyState.style.display = 'block';
+        return;
+      }
+      emptyState.style.display = 'none';
+
+      visibleItems.forEach((item, index) => {
+        const card = document.createElement('article');
+        card.className = 'gallery-card';
+        card.setAttribute('data-category', item.category);
+        card.onclick = () => openLightbox(index);
+
+        card.innerHTML = `
+          <div class="card-media">
+            <img src="${item.thumb}" alt="${item.title}" loading="lazy">
+            <span class="card-tag">${item.tag}</span>
+            <span class="card-overlay-btn" title="Zoom in">
+              <i class="fa-solid fa-magnifying-glass-plus"></i>
+            </span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">${item.title}</h3>
+            <p class="card-desc">${item.desc}</p>
+            <div class="card-footer">
+              <span>Photo #${item.id + 1}</span>
+              <span class="card-footer-action">
+                View Fullscreen <i class="fa-solid fa-arrow-right"></i>
+              </span>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Category Filter
+    function applyCategoryFilter(cat, btn) {
+      currentFilter = cat;
+      const buttons = document.querySelectorAll('.filter-tabs .filter-btn');
+      buttons.forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderGallery();
+    }
+
+    // Search Filter
+    function applySearchFilter() {
+      const input = document.getElementById('gallerySearchInput');
+      searchQuery = input.value.trim().toLowerCase();
+      renderGallery();
+    }
+
+    // Column View toggle
+    function setGridColumns(cols) {
+      const grid = document.getElementById('allGalleryGrid');
+      const btn3 = document.getElementById('view3Btn');
+      const btn4 = document.getElementById('view4Btn');
+
+      if (cols === 4) {
+        grid.classList.add('grid-cols-4');
+        btn4.classList.add('active');
+        btn3.classList.remove('active');
+      } else {
+        grid.classList.remove('grid-cols-4');
+        btn3.classList.add('active');
+        btn4.classList.remove('active');
+      }
+    }
+
+    // Lightbox functions
+    function openLightbox(visibleIndex) {
+      currentLightboxIndex = visibleIndex;
+      updateLightboxContent();
+      const modal = document.getElementById('lightboxModal');
+      modal.classList.add('is-active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('lightboxModal');
+      modal.classList.remove('is-active');
+      document.body.style.overflow = '';
+    }
+
+    function updateLightboxContent() {
+      const item = visibleItems[currentLightboxIndex];
+      if (!item) return;
+
+      const img = document.getElementById('lightboxImg');
+      const title = document.getElementById('lightboxTitle');
+      const desc = document.getElementById('lightboxDesc');
+      const counter = document.getElementById('lightboxCounter');
+      const dlBtn = document.getElementById('lightboxDownloadBtn');
+
+      img.src = item.full;
+      img.alt = item.title;
+      title.textContent = item.title;
+      desc.textContent = item.desc;
+      counter.textContent = `${currentLightboxIndex + 1} / ${visibleItems.length}`;
+      dlBtn.href = item.full;
+      dlBtn.setAttribute('download', (item.title ? item.title.replace(/[^a-zA-Z0-9_\-\s]/g, '').trim() : 'FEAT-Library-Photo') + '.jpg');
+    }
+
+    function nextImage() {
+      if (visibleItems.length <= 1) return;
+      currentLightboxIndex = (currentLightboxIndex + 1) % visibleItems.length;
+      updateLightboxContent();
+    }
+
+    function prevImage() {
+      if (visibleItems.length <= 1) return;
+      currentLightboxIndex = (currentLightboxIndex - 1 + visibleItems.length) % visibleItems.length;
+      updateLightboxContent();
+    }
+
+    // Theme Toggle
+    function toggleTheme() {
+      const body = document.body;
+      const themeBtn = document.getElementById('themeToggleBtn');
+      const currentTheme = body.getAttribute('data-theme');
+
+      if (currentTheme === 'dark') {
+        body.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+        if (themeBtn) themeBtn.innerHTML = `<i class="fa-solid fa-moon"></i>`;
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        if (themeBtn) themeBtn.innerHTML = `<i class="fa-solid fa-sun"></i>`;
+      }
+    }
+
+    // Initialize Theme
+    (function initTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        document.body.setAttribute('data-theme', savedTheme);
+        const themeBtn = document.getElementById('themeToggleBtn');
+        if (themeBtn) {
+          themeBtn.innerHTML = savedTheme === 'dark' ? `<i class="fa-solid fa-sun"></i>` : `<i class="fa-solid fa-moon"></i>`;
+        }
+      }
+    })();
+
+    // Keyboard & backdrop events
+    document.addEventListener('keydown', (e) => {
+      const modal = document.getElementById('lightboxModal');
+      if (!modal || !modal.classList.contains('is-active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    });
+
+    document.getElementById('lightboxModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('lightboxModal')) {
+        closeLightbox();
+      }
+    });
+
+    // Touch swipe for Lightbox
+    let touchStartX = 0;
+    let touchEndX = 0;
+    document.getElementById('lightboxModal').addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    document.getElementById('lightboxModal').addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchEndX < touchStartX - 50) nextImage();
+      if (touchEndX > touchStartX + 50) prevImage();
+    }, { passive: true });
+
+    // Initial load
+    renderGallery();
+  </script>
+</body>
+
+</html>

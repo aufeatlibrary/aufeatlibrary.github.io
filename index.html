@@ -1,0 +1,3972 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Annamalai University FEAT Engineering Library &amp; Question Paper Archive </title>
+<link rel="icon" href="new image/logo.png">
+  <!-- Google Fonts & FontAwesome -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-body: #0b0f19;
+      --bg-nav: rgba(11, 15, 25, 0.88);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --card-bg: rgba(23, 32, 54, 0.72);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover-border: rgba(56, 189, 248, 0.35);
+      --card-shadow: 0 18px 38px rgba(0, 0, 0, 0.35);
+      --primary: #38bdf8;
+      --primary-hover: #0284c7;
+      --primary-glow: rgba(56, 189, 248, 0.22);
+      --accent-gold: #fbbf24;
+      --accent-green: #34d399;
+      --glass-bg: rgba(255, 255, 255, 0.04);
+      --badge-bg: rgba(11, 15, 25, 0.85);
+      --input-bg: rgba(15, 23, 42, 0.7);
+    }
+
+    [data-theme="light"] {
+      --bg-body: #f8fafc;
+      --bg-nav: rgba(255, 255, 255, 0.92);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --card-bg: #ffffff;
+      --card-border: rgba(0, 0, 0, 0.08);
+      --card-hover-border: rgba(2, 132, 199, 0.4);
+      --card-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --primary-glow: rgba(2, 132, 199, 0.15);
+      --accent-gold: #d97706;
+      --accent-green: #059669;
+      --glass-bg: rgba(0, 0, 0, 0.03);
+      --badge-bg: rgba(255, 255, 255, 0.9);
+      --input-bg: #f1f5f9;
+    }
+
+    [data-theme="light"] .card {
+      background: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.1rem 5%;
+      background-color: var(--bg-nav);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .brand-logo {
+      color: var(--text-main);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .brand-logo-img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(56, 189, 248, 0.35));
+    }
+
+    .brand-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    .navbar-brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    /* Backdrop Overlay for Mobile Drawer */
+    .nav-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 1050;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      cursor: pointer;
+    }
+
+    .nav-overlay.is-active {
+      display: block;
+      opacity: 1;
+    }
+
+    .mobile-menu-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--card-border);
+      border-radius: 50%;
+      background: var(--glass-bg);
+      color: var(--text-main);
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all 0.25s ease;
+    }
+
+    .mobile-menu-toggle:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .mobile-drawer-header {
+      display: none;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .theme-toggle-btn,
+    .nav-btn {
+      background: var(--glass-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 0.52rem 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 0.86rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .nav-btn.nav-highlight-btn {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(56, 189, 248, 0.05));
+      border-color: rgba(56, 189, 248, 0.35);
+      color: var(--primary);
+    }
+
+    .nav-btn.nav-highlight-btn:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 14px var(--primary-glow);
+    }
+
+    .icon-only-btn {
+      padding: 0;
+      width: 40px;
+      height: 40px;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    .theme-toggle-btn:hover,
+    .nav-btn:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 14px var(--primary-glow);
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      padding: 4.5rem 1.5rem 3.5rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: radial-gradient(circle at 50% 10%, rgba(56, 189, 248, 0.16), transparent 65%);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .header-branding {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3.4rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, var(--text-main) 30%, var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .logo-seal {
+      width: 110px;
+      height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .logo-seal img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 14px rgba(56, 189, 248, 0.35));
+      animation: floatLogo 4s ease-in-out infinite;
+    }
+
+    @keyframes floatLogo {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-6px);
+      }
+    }
+
+    .hero-dept {
+      color: var(--accent-gold);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-top: 0.4rem;
+    }
+
+    .hero-degree {
+      color: var(--accent-green);
+      font-size: 1.12rem;
+      font-weight: 600;
+      margin-top: 0.4rem;
+      margin-bottom: 1.8rem;
+      max-width: 760px;
+    }
+
+    /* Hero Quick Stats */
+    .hero-stats-bar {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      margin-bottom: 2.2rem;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .hero-stats-bar:empty {
+      display: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .hero-stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 0.7rem 1.4rem;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-stat-card strong {
+      color: var(--primary);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
+    }
+
+    .hero-stat-card i {
+      color: var(--accent-gold);
+    }
+
+    /* Hero Actions */
+    .hero-cta-group {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .explore-btn {
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 0.88rem 2rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(2, 132, 199, 0.35);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .explore-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(2, 132, 199, 0.45);
+    }
+
+    .hero-secondary-btn {
+      background: var(--glass-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 0.85rem 1.8rem;
+      border-radius: 50px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .hero-secondary-btn:hover {
+      background: rgba(56, 189, 248, 0.12);
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* Cards Wrapper */
+    .cards-wrapper {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, margin-top 0.4s ease;
+      width: 100%;
+      max-width: 900px;
+      margin-top: 0;
+    }
+
+    .cards-wrapper.active {
+      max-height: 1400px;
+      opacity: 1;
+      margin-top: 2.8rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 6px;
+      justify-items: center;
+    }
+
+    .card {
+      background: linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
+        linear-gradient(90deg, var(--primary), var(--accent-gold)) border-box;
+      border: 2px solid transparent;
+      backdrop-filter: blur(12px);
+      border-radius: 28px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+      width: min(100%, 540px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      color: inherit;
+      text-decoration: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent-gold));
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 45px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Redesigned Question Paper Access Card & Form */
+    .qp-hero-btn {
+      position: relative;
+      gap: 12px;
+    }
+
+    .qp-hero-btn .toggle-indicator {
+      font-size: 0.85rem;
+      transition: transform 0.3s ease;
+    }
+
+    .qp-hero-btn.is-active .toggle-indicator {
+      transform: rotate(180deg);
+    }
+
+    .card.qp-access-card {
+      width: min(100%, 650px);
+      cursor: default;
+      text-align: left;
+      padding: 2.4rem 2.5rem;
+      align-items: stretch;
+    }
+
+    .card.qp-access-card:hover {
+      transform: none;
+      box-shadow: var(--card-shadow);
+    }
+
+    .qp-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .qp-icon-badge {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.55rem;
+      box-shadow: 0 4px 14px var(--primary-glow);
+    }
+
+    .qp-status-pill {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 5px 14px;
+      border-radius: 30px;
+      background: rgba(52, 211, 153, 0.15);
+      color: #10b981;
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .qp-card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .qp-card-desc {
+      color: var(--text-muted);
+      font-size: 0.94rem;
+      line-height: 1.6;
+      margin-bottom: 1.6rem;
+    }
+
+    .qp-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .qp-form-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .qp-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .qp-label {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .qp-label i {
+      color: var(--primary);
+      font-size: 0.9rem;
+    }
+
+    .required-star {
+      color: #ef4444;
+      font-weight: 700;
+      margin-left: 2px;
+    }
+
+    .qp-input {
+      width: 100%;
+      padding: 0.82rem 1.1rem;
+      background: var(--input-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.25s ease;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .qp-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+      background: var(--card-bg);
+    }
+
+    .qp-select {
+      cursor: pointer;
+    }
+
+    .qp-select option {
+      background-color: #0f172a;
+      color: #f8fafc;
+    }
+
+    [data-theme="light"] .qp-select option {
+      background-color: #ffffff;
+      color: #0f172a;
+    }
+
+    .qp-action-row {
+      display: flex;
+      justify-content: center;
+      margin-top: 0.6rem;
+      width: 100%;
+    }
+
+    .qp-submit-btn {
+      width: 100%;
+      justify-content: center;
+      padding: 0.95rem 2rem;
+      font-size: 1.02rem;
+      gap: 10px;
+      border-radius: 50px;
+    }
+
+    .qp-success-alert {
+      margin-top: 1.2rem;
+      padding: 1.1rem 1.3rem;
+      border-radius: 16px;
+      background: rgba(52, 211, 153, 0.15);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      color: #10b981;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      animation: fadeInScale 0.35s ease;
+    }
+
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .qp-alert-icon {
+      font-size: 1.5rem;
+      line-height: 1;
+      margin-top: 2px;
+      color: #10b981;
+    }
+
+    .qp-alert-text strong {
+      font-size: 0.96rem;
+      display: block;
+      margin-bottom: 3px;
+      color: #10b981;
+    }
+
+    .qp-alert-text p {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .card-icon {
+      font-size: 3rem;
+      color: var(--primary);
+      margin-bottom: 1.2rem;
+    }
+
+    .card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.45rem;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.8rem;
+      line-height: 1.6;
+    }
+
+    .card-btn {
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: #ffffff;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 40px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 6px 18px rgba(2, 132, 199, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .card-btn:hover {
+      box-shadow: 0 8px 24px rgba(2, 132, 199, 0.45);
+      transform: translateY(-2px);
+    }
+
+    /* Shared Section Styling */
+    .section-container {
+      max-width: 1200px;
+      margin: 5rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.2rem;
+      color: var(--text-main);
+      margin-bottom: 2.8rem;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      width: 50px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent-gold));
+      display: block;
+      margin: 12px auto 0;
+      border-radius: 3px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: -1.8rem auto 2.8rem;
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+
+    /* Video Tour Section (Refined Compact Layout) */
+    .video-container-card {
+      max-width: 960px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .video-container-card:hover {
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    .video-player-wrapper {
+      position: relative;
+      width: 100%;
+      background: #000000;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      max-height: 440px;
+    }
+
+    .video-player-wrapper video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      background: #000000;
+      outline: none;
+    }
+
+    .video-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(11, 15, 25, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #ffffff;
+      padding: 4px 12px;
+      border-radius: 24px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .video-badge i {
+      color: var(--primary);
+    }
+
+    .video-meta {
+      padding: 1.25rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .video-meta-info h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.15rem;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 0.35rem;
+    }
+
+    .video-meta-info h3 i {
+      color: var(--primary);
+      font-size: 1.05rem;
+    }
+
+    .video-meta-info p {
+      color: var(--text-muted);
+      font-size: 0.86rem;
+      line-height: 1.5;
+    }
+
+    .video-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .video-feature-pill {
+      background: var(--glass-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 0.32rem 0.72rem;
+      border-radius: 14px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .video-feature-pill i {
+      color: var(--primary);
+      font-size: 0.72rem;
+    }
+
+    .video-tour-footer {
+      margin-top: 1.4rem;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .video-tour-footer-card {
+      width: 100%;
+      max-width: 960px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.2rem;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+    }
+
+    .video-tour-footer-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 4px;
+      background: linear-gradient(180deg, var(--primary), var(--accent-gold));
+    }
+
+    .video-tour-footer-info h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 0.25rem;
+    }
+
+    .video-tour-footer-info h4 i {
+      color: var(--primary);
+      font-size: 0.95rem;
+    }
+
+    .video-tour-footer-info p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    .tour-more-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: #ffffff !important;
+      text-decoration: none;
+      padding: 0.65rem 1.4rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      box-shadow: 0 8px 20px rgba(2, 132, 199, 0.28);
+      white-space: nowrap;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .tour-more-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 12px 26px rgba(2, 132, 199, 0.4);
+    }
+
+    .youtube-video-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #ef4444 !important;
+      text-decoration: none;
+      padding: 0.65rem 1.3rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+
+    .youtube-video-btn:hover {
+      background: #ff0000;
+      border-color: #ff0000;
+      color: #ffffff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 0, 0, 0.35);
+    }
+
+    /* ==============================================================
+       REDESIGNED FEATURED GALLERY SECTION (4 Highlight Images + Next Page)
+       ============================================================== */
+    .featured-gallery-section {
+      position: relative;
+    }
+
+    .gallery-header-meta {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .gallery-highlight-pill {
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--primary);
+      padding: 5px 14px;
+      border-radius: 30px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* 4-Image Featured Grid */
+    .featured-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+      margin-bottom: 2.8rem;
+    }
+
+    .featured-gallery-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+
+    .featured-gallery-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--card-hover-border);
+      box-shadow: 0 22px 48px rgba(0, 0, 0, 0.3);
+    }
+
+    .featured-card-media {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      background: rgba(15, 23, 42, 0.5);
+    }
+
+    [data-theme="light"] .featured-card-media {
+      background: #f1f5f9;
+    }
+
+    .featured-card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .featured-gallery-card:hover .featured-card-media img {
+      transform: scale(1.08);
+    }
+
+    .featured-card-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--badge-bg);
+      color: var(--primary);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--card-border);
+      z-index: 2;
+    }
+
+    .featured-zoom-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--badge-bg);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.88rem;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.25s ease;
+      z-index: 2;
+      border: 1px solid var(--card-border);
+    }
+
+    .featured-gallery-card:hover .featured-zoom-btn {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .featured-gallery-card:hover .featured-zoom-btn:hover {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .featured-card-body {
+      padding: 1.25rem 1.3rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .featured-card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+      line-height: 1.35;
+    }
+
+    .featured-card-desc {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      flex: 1;
+    }
+
+    .featured-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--card-border);
+      padding-top: 0.75rem;
+      font-size: 0.8rem;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .featured-card-footer i {
+      transition: transform 0.2s ease;
+    }
+
+    .featured-gallery-card:hover .featured-card-footer i {
+      transform: translateX(4px);
+    }
+
+    /* ==============================================================
+       "SEE ALL IMAGES" NEXT PAGE BANNER
+       ============================================================== */
+    .gallery-see-all-banner {
+      background: linear-gradient(135deg, rgba(23, 32, 54, 0.9), rgba(15, 23, 42, 0.95)) padding-box,
+        linear-gradient(90deg, var(--primary), var(--accent-gold)) border-box;
+      border: 2px solid transparent;
+      border-radius: 24px;
+      padding: 2.2rem 2.8rem;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(14px);
+    }
+
+    [data-theme="light"] .gallery-see-all-banner {
+      background: linear-gradient(135deg, #ffffff, #f8fafc) padding-box,
+        linear-gradient(90deg, var(--primary), var(--accent-gold)) border-box;
+    }
+
+    .gallery-see-all-banner::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.15), transparent 70%);
+      pointer-events: none;
+    }
+
+    .see-all-info {
+      flex: 1;
+      max-width: 680px;
+    }
+
+    .see-all-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 4px 12px;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--primary);
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 0.8rem;
+    }
+
+    .see-all-info h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.55rem;
+      color: var(--text-main);
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .see-all-info p {
+      color: var(--text-muted);
+      font-size: 0.96rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .see-all-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .see-all-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: #ffffff !important;
+      text-decoration: none;
+      padding: 1rem 2.2rem;
+      border-radius: 50px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      box-shadow: 0 10px 28px rgba(2, 132, 199, 0.4);
+      white-space: nowrap;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .see-all-cta-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 16px 36px rgba(2, 132, 199, 0.5);
+    }
+
+    .see-all-cta-btn i {
+      transition: transform 0.25s ease;
+    }
+
+    .see-all-cta-btn:hover i {
+      transform: translateX(5px);
+    }
+
+    .see-all-preview-count {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .see-all-preview-count i {
+      color: var(--accent-gold);
+    }
+
+    /* About Grid */
+    .info-grid {
+      display: grid;
+      gap: 30px;
+    }
+
+    .about-overview-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .vision-mission-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 32px;
+    }
+
+    .info-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 2.2rem;
+      border-radius: 20px;
+      box-shadow: var(--card-shadow);
+      min-width: 0;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .info-box:hover {
+      transform: translateY(-4px);
+      border-color: var(--card-hover-border);
+    }
+
+    .info-box h3 {
+      color: var(--text-main);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .info-box h3 i {
+      color: var(--primary);
+    }
+
+    .info-box p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .info-subtitle {
+      grid-column: 1 / -1;
+      text-align: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin: 4.8rem 0 2.4rem;
+      position: relative;
+    }
+
+    .info-subtitle::after {
+      content: '';
+      width: 44px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent-gold));
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+
+    /* Created By Section */
+    .creator-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      max-width: 920px;
+      margin: 1rem auto 0;
+    }
+
+    .creator-toggle-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin: -1.2rem auto 2.5rem;
+    }
+
+    .creator-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: #ffffff;
+      border: none;
+      border-radius: 50px;
+      padding: 0.9rem 2.2rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      box-shadow: 0 10px 24px -4px rgba(2, 132, 199, 0.4);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .creator-toggle:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px -4px rgba(2, 132, 199, 0.55);
+    }
+
+    .creator-grid.is-hidden {
+      display: none;
+    }
+
+    .creator-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      min-width: 235px;
+      max-width: 265px;
+      position: relative;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+                  box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+                  border-color 0.35s ease;
+    }
+
+    .creator-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--card-hover-border);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.25);
+    }
+
+    .creator-card-img-wrap {
+      width: 100%;
+      aspect-ratio: 3 / 3.8;
+      background: #00cefb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    [data-theme="light"] .creator-card-img-wrap {
+      background: #00cefb;
+    }
+
+    .creator-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .creator-card:hover img {
+      transform: scale(1.03);
+    }
+
+    .creator-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, 0.45) 100%);
+      pointer-events: none;
+    }
+
+    .creator-pill-badge {
+      position: absolute;
+      bottom: 10px;
+      left: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(11, 15, 25, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 50px;
+      padding: 0.25rem 0.7rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 2;
+    }
+
+    .creator-pill-badge i {
+      color: var(--primary);
+      font-size: 0.74rem;
+    }
+
+    .creator-card-content {
+      padding: 1rem 1.05rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 0.6rem;
+    }
+
+    .creator-header-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .creator-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.2px;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .creator-dept-tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--primary);
+      letter-spacing: 0.2px;
+    }
+
+    .creator-batch {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--accent-gold);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      letter-spacing: 0.2px;
+    }
+
+    .creator-bio {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      line-height: 1.5;
+      margin: 0;
+      flex: 1;
+    }
+
+    .creator-skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 0.1rem;
+    }
+
+    .creator-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--glass-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      font-size: 0.67rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .creator-card:hover .creator-tag {
+      border-color: rgba(2, 132, 199, 0.25);
+      color: var(--text-main);
+    }
+
+    .creator-card-footer {
+      padding-top: 0.65rem;
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+
+    .creator-affiliation {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .creator-affiliation i {
+      color: var(--accent-gold);
+    }
+
+    /* ==============================================================
+       STAFFS SECTION STYLES
+       ============================================================== */
+    .staffs-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+
+    .staff-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      cursor: pointer;
+      width: calc(25% - 16px);
+      min-width: 235px;
+      max-width: 265px;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+
+    .staff-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--card-hover-border);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.25);
+    }
+
+    .staff-card-media {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 3.8;
+      overflow: hidden;
+      background: #59c5eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    [data-theme="light"] .staff-card-media {
+      background: #59c5eb;
+    }
+
+    .staff-card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .staff-card:hover .staff-card-media img {
+      transform: scale(1.04);
+    }
+
+    .staff-role-tag {
+      display: none;
+    }
+
+    .staff-zoom-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--badge-bg);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.25s ease;
+      border: 1px solid var(--card-border);
+      z-index: 2;
+    }
+
+    .staff-card:hover .staff-zoom-icon {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .staff-card:hover .staff-zoom-icon:hover {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .staff-card-body {
+      padding: 1rem 1.15rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .staff-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.2rem;
+      line-height: 1.3;
+    }
+
+    .staff-designation {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      margin-bottom: 0.55rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      line-height: 1.3;
+    }
+
+    .staff-description {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .staff-card-footer {
+      border-top: 1px solid var(--card-border);
+      padding-top: 0.65rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.76rem;
+    }
+
+    .staff-contact-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.76rem;
+    }
+
+    .staff-view-btn {
+      color: var(--text-muted);
+      font-size: 0.74rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .staff-card:hover .staff-view-btn {
+      color: var(--primary);
+    }
+
+    /* Staff Profile Modal */
+    .staff-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 12, 22, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 2500;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      overflow-y: auto;
+    }
+
+    .staff-modal.is-active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .staff-modal-content {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 22px;
+      max-width: 540px;
+      width: 100%;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+      position: relative;
+      animation: lightboxPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      margin: auto;
+    }
+
+    .staff-modal-header {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      background: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    [data-theme="light"] .staff-modal-header {
+      background: #0f172a;
+    }
+
+    .staff-modal-header img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .staff-modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: #ffffff;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+      z-index: 10;
+      padding: 0;
+      margin: 0;
+      outline: none;
+    }
+
+    .staff-modal-close:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: scale(1.1) rotate(90deg);
+      box-shadow: 0 6px 18px rgba(2, 132, 199, 0.45);
+    }
+
+    .staff-modal-body {
+      padding: 1.4rem 1.6rem 1.5rem;
+    }
+
+    .staff-modal-body h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      color: var(--text-main);
+      margin-bottom: 0.2rem;
+    }
+
+    .staff-modal-designation {
+      color: var(--accent-gold);
+      font-weight: 700;
+      font-size: 0.88rem;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .staff-modal-desc {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.55;
+      margin-bottom: 1.1rem;
+    }
+
+    .staff-modal-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 1.2rem;
+    }
+
+    .staff-meta-item {
+      background: var(--glass-bg);
+      border: 1px solid var(--card-border);
+      padding: 0.7rem 0.9rem;
+      border-radius: 12px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .staff-meta-item strong {
+      display: block;
+      color: var(--text-main);
+      font-size: 0.84rem;
+      margin-bottom: 2px;
+    }
+
+    /* Contact Section Layout */
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      align-items: stretch;
+    }
+
+    .contact-details,
+    .contact-form-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      margin-top: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .contact-item i {
+      color: var(--primary);
+      font-size: 1.2rem;
+      margin-top: 4px;
+    }
+
+    .map-container {
+      margin-top: 2rem;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+    }
+
+    .contact-form-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: var(--input-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    .submit-btn {
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: #ffffff;
+      border: none;
+      padding: 0.85rem 2rem;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      font-size: 1rem;
+      box-shadow: 0 6px 18px rgba(2, 132, 199, 0.3);
+      transition: all 0.25s ease;
+    }
+
+    .submit-btn:hover {
+      box-shadow: 0 10px 24px rgba(2, 132, 199, 0.45);
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--bg-nav);
+      border-top: 1px solid var(--card-border);
+      color: var(--text-muted);
+      text-align: center;
+      padding: 2.5rem 1rem;
+      margin-top: 5rem;
+      font-size: 0.9rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .footer-nav-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-nav-links a:hover {
+      color: var(--primary);
+    }
+
+    /* Lightbox Modal */
+    .lightbox-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 12, 22, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .lightbox-modal.is-active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: 94vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: lightboxPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes lightboxPop {
+      from {
+        transform: scale(0.92);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .lightbox-content img {
+      max-width: 100%;
+      max-height: 74vh;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .lightbox-caption {
+      margin-top: 14px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #f8fafc;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .lightbox-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .lightbox-counter {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.1);
+      padding: 4px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .lightbox-see-all-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .lightbox-see-all-link:hover {
+      text-decoration: underline;
+    }
+
+    .lightbox-close-btn {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(30, 41, 59, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #ffffff;
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 10;
+    }
+
+    .lightbox-close-btn:hover {
+      background: #ef4444;
+      border-color: #ef4444;
+      color: #ffffff;
+      transform: scale(1.12);
+      box-shadow: 0 8px 22px rgba(239, 68, 68, 0.45);
+    }
+
+    .lightbox-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #ffffff;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      z-index: 10;
+    }
+
+    .lightbox-nav-btn:hover {
+      background: var(--primary);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .lightbox-prev-btn {
+      left: 24px;
+    }
+
+    .lightbox-next-btn {
+      right: 24px;
+    }
+
+    /* Responsive Queries */
+    @media (max-width: 1100px) {
+
+      .featured-gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .staff-card {
+        width: calc(33.333% - 15px);
+        min-width: 220px;
+        max-width: 260px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .staff-card {
+        width: calc(50% - 12px);
+        min-width: 200px;
+        max-width: 250px;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .contact-wrapper {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-overview-grid,
+      .vision-mission-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .vision-mission-grid {
+        gap: 20px;
+      }
+
+      .creator-grid {
+        justify-content: center;
+      }
+
+      .gallery-see-all-banner {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        padding: 2rem 1.5rem;
+      }
+
+      .see-all-actions {
+        align-items: center;
+      }
+
+      .see-all-cta-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    /* Tablet & Mobile Screens (<= 768px) */
+    @media (max-width: 768px) {
+      .navbar {
+        align-items: center;
+        padding: 0.75rem 1rem;
+      }
+
+      .navbar-brand-row {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .brand-logo {
+        flex: 1;
+        min-width: 0;
+        justify-content: flex-start;
+        gap: 8px;
+        font-size: clamp(0.74rem, 3.8vw, 1.05rem);
+      }
+
+      .brand-logo-img {
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+      }
+
+      .mobile-menu-toggle {
+        display: flex;
+        position: static;
+        flex-shrink: 0;
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+      }
+
+      /* Slide-In Navigation Drawer */
+      .nav-actions {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1100;
+        width: min(84vw, 320px);
+        height: 100vh;
+        height: 100dvh;
+        padding: 1.25rem 1rem 2rem;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 8px;
+        background: var(--bg-nav);
+        border-right: 1px solid var(--card-border);
+        box-shadow: 20px 0 45px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        transform: translateX(-105%);
+        transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+        overflow-y: auto;
+      }
+
+      .nav-actions.is-open {
+        transform: translateX(0);
+      }
+
+      .mobile-drawer-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 0.9rem;
+        margin-bottom: 0.7rem;
+        border-bottom: 1px solid var(--card-border);
+      }
+
+      .drawer-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .drawer-brand strong {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.95rem;
+        color: var(--text-main);
+        display: block;
+      }
+
+      .drawer-brand small {
+        font-size: 0.74rem;
+        color: var(--text-muted);
+        display: block;
+      }
+
+      .drawer-close-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid var(--card-border);
+        background: var(--glass-bg);
+        color: var(--text-main);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 1.1rem;
+        transition: all 0.2s ease;
+      }
+
+      .drawer-close-btn:hover {
+        background: var(--primary);
+        color: #fff;
+      }
+
+      .nav-actions .nav-btn,
+      .nav-actions .theme-toggle-btn {
+        width: 100%;
+        justify-content: flex-start;
+        padding: 0.75rem 1rem;
+        border-radius: 12px;
+        font-size: 0.92rem;
+      }
+
+      /* Hero Section */
+      .hero {
+        padding: 2.2rem 0.9rem 2rem;
+      }
+
+      .header-branding {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(6px, 2.2vw, 16px);
+        margin-bottom: 0.6rem;
+        width: 100%;
+      }
+
+      .logo-seal {
+        order: 0;
+        margin-bottom: 0;
+        width: clamp(36px, 9.5vw, 60px) !important;
+        height: clamp(36px, 9.5vw, 60px) !important;
+        flex-shrink: 0;
+      }
+
+      .logo-seal img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: contain;
+      }
+
+      .hero-title {
+        font-size: clamp(1.15rem, 5.2vw, 1.95rem);
+        line-height: 1.15;
+        text-align: center;
+        white-space: nowrap;
+      }
+
+      .hero-dept {
+        font-size: clamp(0.85rem, 3.8vw, 1.25rem);
+        padding: 0 0.5rem;
+        text-align: center;
+        line-height: 1.35;
+        margin-top: 0.4rem;
+        margin-bottom: 0.4rem;
+      }
+
+      .hero-degree {
+        font-size: clamp(0.76rem, 3.2vw, 0.98rem);
+        margin-bottom: 1.5rem;
+        padding: 0 0.5rem;
+        text-align: center;
+        line-height: 1.5;
+      }
+
+      .hero-cta-group {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 0 0.5rem;
+      }
+
+      .qp-hero-btn {
+        width: auto;
+        max-width: 100%;
+        min-height: 46px;
+        justify-content: center;
+        font-size: clamp(0.82rem, 3.6vw, 0.98rem);
+        padding: 0.75rem 1.35rem;
+        border-radius: 50px;
+        white-space: nowrap;
+        gap: 8px;
+        box-shadow: 0 6px 20px rgba(2, 132, 199, 0.35);
+      }
+
+      .qp-hero-btn i {
+        font-size: 0.92rem;
+      }
+
+      /* Question Paper Verification Card */
+      .cards-wrapper.active {
+        margin-top: 1.8rem;
+      }
+
+      .card.qp-access-card {
+        padding: 1.6rem 1.25rem;
+        border-radius: 20px;
+        width: 100%;
+      }
+
+      .qp-card-title {
+        font-size: 1.35rem;
+      }
+
+      .qp-card-desc {
+        font-size: 0.88rem;
+        margin-bottom: 1.2rem;
+      }
+
+      .qp-input,
+      .qp-select {
+        font-size: 16px;
+        /* Eliminates iOS auto-zoom bug */
+        padding: 0.75rem 0.95rem;
+      }
+
+      .qp-submit-btn {
+        font-size: 0.98rem;
+        padding: 0.9rem 1.4rem;
+        min-height: 48px;
+      }
+
+      /* Sections & Typography */
+      .section-container {
+        margin: 2.8rem auto;
+        padding: 0 1rem;
+      }
+
+      .section-title {
+        font-size: clamp(1.45rem, 5vw, 2rem);
+      }
+
+      .section-subtitle {
+        font-size: 0.92rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .info-box {
+        padding: 1.6rem 1.3rem;
+        border-radius: 20px;
+      }
+
+      .info-subtitle,
+      .vision-mission-title {
+        margin-top: 3.2rem;
+        margin-bottom: 1.6rem;
+        font-size: 1.65rem;
+        text-align: center;
+      }
+
+      /* Video Tour Section */
+      .video-meta {
+        padding: 1rem;
+        gap: 0.75rem;
+      }
+
+      .video-meta-info h3 {
+        font-size: 1.05rem;
+      }
+
+      .video-tour-footer-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+        gap: 0.85rem;
+      }
+
+      .video-tour-footer-info h4 {
+        justify-content: center;
+      }
+
+      .video-tour-footer-actions {
+        width: 100%;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .video-tour-footer-actions .tour-more-btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      /* Gallery & Staff Grids */
+      .featured-gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .staff-card {
+        width: 100%;
+        max-width: 265px;
+      }
+
+      .gallery-header-meta {
+        gap: 8px;
+        margin-bottom: 1.5rem;
+      }
+
+      .gallery-highlight-pill {
+        font-size: 0.78rem;
+        padding: 5px 12px;
+      }
+
+      /* Staff Profile Modal */
+      .staff-modal {
+        padding: 12px;
+      }
+
+      .staff-modal-content {
+        max-height: 88vh;
+        max-height: 88dvh;
+        overflow-y: auto;
+        border-radius: 20px;
+        width: min(96vw, 560px);
+      }
+
+      .staff-modal-header {
+        height: 180px;
+      }
+
+      .staff-modal-body {
+        padding: 1.3rem 1.15rem;
+      }
+
+      .staff-modal-body h3 {
+        font-size: 1.3rem;
+      }
+
+      .staff-modal-meta-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      /* Creator Cards Mobile */
+      .creator-grid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .creator-card {
+        width: 100%;
+        max-width: 265px;
+      }
+
+      .creator-card-img-wrap {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 3 / 3.8;
+      }
+
+      .creator-card-content {
+        padding: 1rem 1.05rem 1.15rem;
+        gap: 0.6rem;
+      }
+
+      .creator-name {
+        font-size: 1.1rem;
+      }
+
+      /* Contact Section */
+      .contact-form-card {
+        padding: 1.5rem 1.15rem;
+        border-radius: 20px;
+      }
+
+      .form-control {
+        font-size: 16px;
+        /* Eliminates iOS auto-zoom bug */
+        padding: 0.8rem 0.95rem;
+      }
+
+      .submit-btn {
+        width: 100%;
+        justify-content: center;
+        min-height: 48px;
+      }
+
+      /* Lightbox Modal */
+      .lightbox-modal {
+        padding: 10px;
+      }
+
+      .lightbox-content {
+        max-width: 100vw;
+        max-height: 94vh;
+        max-height: 94dvh;
+        padding: 0 4px;
+      }
+
+      .lightbox-content img {
+        max-height: 64vh;
+        max-height: 64dvh;
+      }
+
+      .lightbox-caption {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 0 4px;
+      }
+
+      .lightbox-title {
+        font-size: 0.95rem;
+      }
+
+      .lightbox-nav-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 0.95rem;
+      }
+
+      .lightbox-prev-btn {
+        left: 8px;
+      }
+
+      .lightbox-next-btn {
+        right: 8px;
+      }
+
+      .lightbox-close-btn {
+        top: 12px;
+        right: 12px;
+        width: 38px;
+        height: 38px;
+      }
+
+      /* Footer */
+      footer {
+        padding: 2.2rem 1.2rem 2.8rem;
+      }
+
+      .footer-nav-links {
+        gap: 1rem;
+      }
+    }
+
+    /* Small Mobile Devices (<= 640px) */
+    @media (max-width: 640px) {
+
+      /* Hero 2x2 Stats Dashboard Grid */
+      .hero-stats-bar {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        width: 100%;
+        max-width: 440px;
+        margin-bottom: 1.8rem;
+        padding: 0 4px;
+      }
+
+      .hero-stat-card {
+        padding: 0.9rem 0.65rem;
+        border-radius: 18px;
+        flex-direction: column;
+        text-align: center;
+        gap: 6px;
+        font-size: 0.78rem;
+        justify-content: center;
+      }
+
+      .hero-stat-card i {
+        font-size: 1.35rem;
+      }
+
+      .hero-stat-card strong {
+        font-size: 1.1rem;
+        display: block;
+      }
+
+
+    }
+
+    /* Extra Small Phones (<= 420px) */
+    @media (max-width: 420px) {
+      .hero-stats-bar {
+        gap: 9px;
+      }
+
+      .hero-stat-card {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.74rem;
+      }
+
+      .hero-stat-card strong {
+        font-size: 1.02rem;
+      }
+
+      .card.qp-access-card {
+        padding: 1.3rem 0.95rem;
+      }
+    }
+  </style>
+</head>
+
+<body data-theme="light">
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-brand-row">
+      <a href="#" class="brand-logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+        <img src="new image/logo.png" alt="Annamalai University Logo" class="brand-logo-img">
+        <span>Annamalai University</span>
+        <span class="brand-pill">FEAT</span>
+      </a>
+
+      <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button" onclick="toggleMobileMenu()"
+        aria-label="Open navigation menu" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- Backdrop Overlay for Mobile Drawer -->
+    <div class="nav-overlay" id="navOverlay" onclick="closeMobileMenu()" aria-hidden="true"></div>
+
+    <div class="nav-actions" id="navActions">
+      <div class="mobile-drawer-header">
+        <div class="drawer-brand">
+          <img src="new image/logo.png" alt="Annamalai University Logo" class="brand-logo-img">
+          <div>
+            <strong>FEAT Library</strong>
+            <small>Annamalai University</small>
+          </div>
+        </div>
+        <button class="drawer-close-btn" type="button" onclick="closeMobileMenu()" aria-label="Close navigation menu">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <button class="nav-btn" onclick="closeMobileMenu(); window.scrollTo({top: 0, behavior: 'smooth'})">Home</button>
+      <button class="nav-btn" onclick="scrollToInfo('aboutSection')">About</button>
+      <button class="nav-btn" onclick="scrollToInfo('gallerySection')">Gallery</button>
+      <button class="nav-btn" onclick="scrollToInfo('videoTourSection')">Video Tour</button>
+      <button class="nav-btn" onclick="scrollToInfo('staffsSection')">
+        <i class="fa-solid fa-users"></i> Staffs
+      </button>
+      <button class="nav-btn" onclick="scrollToInfo('createdBySection')">Created By</button>
+      <button class="nav-btn" onclick="scrollToInfo('contactSection')">Contact</button>
+      <button class="theme-toggle-btn icon-only-btn" id="themeToggleBtn" onclick="toggleTheme()"
+        aria-label="Toggle Theme">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="header-branding">
+      <span class="hero-title">Annamalai</span>
+
+      <div class="logo-seal">
+        <img src="new image/logo.png" alt="Annamalai University Official Seal">
+      </div>
+
+      <span class="hero-title">University</span>
+    </div>
+
+    <h2 class="hero-dept">FACULTY OF ENGINEERING &amp; TECHNOLOGY</h2>
+    <h3 class="hero-degree">Central Engineering Library &bull; Previous Semester Question Paper &bull; Archive Portal
+    </h3>
+
+    <!-- Hero Actions & Centered Access Button -->
+    <div class="hero-cta-group" style="margin-bottom: 1.75rem;">
+      <button class="explore-btn qp-hero-btn" id="toggleCardsBtn" onclick="toggleCards()" aria-expanded="false"
+        aria-controls="cardsWrapper">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <span>Access Question Papers</span>
+        <i class="fa-solid fa-chevron-down toggle-indicator"></i>
+      </button>
+    </div>
+
+    <!-- Centered Key Library Highlights -->
+    <div class="hero-stats-bar">
+
+    </div>
+
+    <!-- Question Paper Cards Section (Expandable Student Verification & Access Card) -->
+    <div class="cards-wrapper" id="cardsWrapper">
+      <div class="cards-grid">
+        <div class="card qp-access-card" id="qpAccessCard">
+          <div class="qp-card-header">
+            <div class="qp-icon-badge">
+              <i class="fa-solid fa-file-signature"></i>
+            </div>
+            <span class="qp-status-pill">
+              <i class="fa-solid fa-shield-halved"></i> Student Verification Portal
+            </span>
+          </div>
+
+          <h3 class="qp-card-title">Semester Question Papers Archive</h3>
+          <p class="qp-card-desc">
+            Please enter your details below to log your library session and unlock direct access to university semester
+            examination question papers, reference solutions, and unit summaries for all engineering departments.
+          </p>
+
+          <!-- Student Data Entry Form -->
+          <form id="studentEntryForm" class="qp-form" onsubmit="handleStudentFormSubmit(event)">
+            <div class="qp-form-grid">
+
+              <!-- Name Input -->
+              <div class="qp-input-group">
+                <label for="studentName" class="qp-label">
+                  <i class="fa-solid fa-user"></i> Student Name <span class="required-star">*</span>
+                </label>
+                <div class="qp-input-wrapper">
+                  <input type="text" id="studentName" name="studentName" class="qp-input"
+                    placeholder="Enter your full name (e.g. R. Ananth)" required autocomplete="name">
+                </div>
+              </div>
+
+              <!-- Department (Dept) Input -->
+              <div class="qp-input-group">
+                <label for="studentDept" class="qp-label">
+                  <i class="fa-solid fa-building-columns"></i> Department (Dept) <span class="required-star">*</span>
+                </label>
+                <div class="qp-input-wrapper">
+                  <select id="studentDept" name="studentDept" class="qp-input qp-select" required>
+                    <option value="" disabled selected>Select your engineering department...</option>
+                    <option value="Chemical Engineering">Chemical Engineering</option>
+                    <option value="Civil Engineering">Civil Engineering</option>
+                    <option value="Civil & Structural Engineering">Civil &amp; Structural Engineering</option>
+                    <option value="Computer Science & Engineering (CSE)">Computer Science &amp; Engineering (CSE)</option>
+                    <option value="Electrical Engineering">Electrical Engineering</option>
+                    <option value="Electronics & Communication Engineering (ECE)">Electronics &amp; Communication Engineering (ECE)</option>
+                    <option value="Electronics & Instrumentation Engineering (E&I)">Electronics &amp; Instrumentation Engineering (E&amp;I)</option>
+                    <option value="Information Technology (IT)">Information Technology (IT)</option>
+                    <option value="Mechanical Engineering">Mechanical Engineering</option>
+                    <option value="Manufacturing Engineering">Manufacturing Engineering</option>
+                    <option value="Pharmacy">Pharmacy</option>
+                    <option value="other FEAT Dept">other FEAT Dept</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Year of Study Input -->
+              <div class="qp-input-group">
+                <label for="studentYear" class="qp-label">
+                  <i class="fa-solid fa-calendar-check"></i> Year of Study <span class="required-star">*</span>
+                </label>
+                <div class="qp-input-wrapper">
+                  <select id="studentYear" name="studentYear" class="qp-input qp-select" required>
+                    <option value="" disabled selected>Select current year of study...</option>
+                    <option value="1st Year (Semester 1 & 2)">1st Year (Semester 1 &amp; 2)</option>
+                    <option value="2nd Year (Semester 3 & 4)">2nd Year (Semester 3 &amp; 4)</option>
+                    <option value="3rd Year (Semester 5 & 6)">3rd Year (Semester 5 &amp; 6)</option>
+                    <option value="4th Year (Semester 7 & 8)">4th Year (Semester 7 &amp; 8)</option>
+                    <option value="Postgraduate (M.E / M.Tech)">Postgraduate (M.E / M.Tech)</option>
+                    <option value="Research Scholar (Ph.D / MS)">Research Scholar (Ph.D / MS)</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Action Submit Button -->
+            <div class="qp-action-row">
+              <button type="submit" class="card-btn qp-submit-btn" id="qpSubmitBtn">
+                <i class="fa-solid fa-cloud-arrow-down"></i>
+                <span>Submit &amp; Open Drive Archive</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </button>
+            </div>
+          </form>
+
+          <!-- Success Alert Notification -->
+          <div class="qp-success-alert" id="qpSuccessAlert" role="alert" style="display: none;">
+            <div class="qp-alert-icon">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div class="qp-alert-text">
+              <strong>Access Granted!</strong>
+              <p>Verification successful. Opening Question Papers Archive in a new tab...</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- About Section -->
+  <section class="section-container" id="aboutSection">
+    <h2 class="section-title">About Annamalai University</h2>
+    <div class="info-grid about-overview-grid">
+      <div class="info-box">
+        <h3><i class="fa-solid fa-building-columns"></i> The University</h3>
+        <p>Annamalai University is a premier unitary and affiliating institution in Annamalainagar, Tamil Nadu,
+          recognized for high academic standards and extensive research output across diverse fields.</p>
+      </div>
+
+      <div class="info-box">
+        <h3><i class="fa-solid fa-laptop-code"></i> Engineering Library</h3>
+        <p>The FEAT Library serves as an academic nerve center for engineers, offering specialized book stacks in
+          Computer Science, AI, Electronics, Mechanical, Civil, and Chemical disciplines.</p>
+      </div>
+
+      <div class="info-box">
+        <h3><i class="fa-solid fa-book-open"></i> Question Paper Archive</h3>
+        <p>This dedicated student portal brings together semester examination papers and syllabus study notes, helping
+          scholars revise efficiently and succeed in their academic assessments.</p>
+      </div>
+    </div>
+
+    <h2 class="info-subtitle vision-mission-title">Vision &amp; Mission</h2>
+
+    <div class="info-grid vision-mission-grid">
+      <div class="info-box" id="visionSection">
+        <h3><i class="fa-solid fa-eye"></i> Vision</h3>
+        <p>Providing world class quality education with strong ethical values to nurture and develop outstanding
+          professionals fit for a globally competitive environment.</p>
+      </div>
+
+      <div class="info-box" id="missionSection">
+        <h3><i class="fa-solid fa-flag"></i> Mission</h3>
+        <ul style="padding-left: 1.2rem; color: var(--text-muted); line-height: 1.7;">
+          <li>Provide quality technical education with a sound footing on basic engineering principles and research
+            capabilities.</li>
+          <li>Transform students into outstanding professionals capable of creating, developing, and managing global
+            enterprises.</li>
+          <li>Develop a Global Knowledge Hub, striving continuously in pursuit of excellence in Education and Industry
+            services.</li>
+          <li>Inculcate life-long learning to move forward with updated knowledge to face future technological
+            challenges.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Tour Section -->
+  <section class="section-container" id="videoTourSection">
+    <h2 class="section-title">FEAT Library Virtual Tour</h2>
+    <p class="section-subtitle">Take an interactive digital walkthrough of our E-Journals Internet Lab, student browsing
+      terminals, and departmental engineering archives.</p>
+
+    <div class="video-container-card">
+      <div class="video-player-wrapper">
+        <video id="libraryVideoPlayer" controls playsinline preload="metadata" poster="new image/web/video-thumb.jpg">
+          <source src="video/full%20library.mp4" type="video/mp4">
+          <source src="video/full library.mp4" type="video/mp4">
+          <source src="video/library-tour.mp4" type="video/mp4">
+          <source src="library-tour.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <div class="video-badge"><i class="fa-solid fa-circle-play"></i> Full Virtual Tour &bull; FEAT Library</div>
+      </div>
+      <div class="video-meta">
+        <div class="video-meta-info">
+          <h3><i class="fa-solid fa-video"></i> Full FEAT Engineering Library Virtual Tour</h3>
+          <p>Comprehensive video tour showcasing the entire Faculty of Engineering &amp; Technology Library: air-conditioned reading halls, high-speed digital computing lab, OPAC stations, circulation counters, and departmental engineering stacks.
+          </p>
+        </div>
+        <div class="video-features">
+          <div class="video-feature-pill"><i class="fa-solid fa-film"></i> Full Library Walkthrough</div>
+          <div class="video-feature-pill"><i class="fa-solid fa-snowflake"></i> Central Air-Conditioned Halls</div>
+          <div class="video-feature-pill"><i class="fa-solid fa-desktop"></i> Digital Lab Terminals</div>
+          <div class="video-feature-pill"><i class="fa-solid fa-book-bookmark"></i> 100,000+ Volume Stacks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- More Virtual Tours Button Card -->
+    <div class="video-tour-footer">
+      <div class="video-tour-footer-card">
+        <div class="video-tour-footer-info">
+          <h4><i class="fa-solid fa-clapperboard"></i> Want to see more virtual tours?</h4>
+          <p>Discover high-definition virtual walkthroughs showcasing reading rooms, research labs, book stacks, and
+            campus facilities.</p>
+        </div>
+        <div class="video-tour-footer-actions">
+          <a href="virtual-tour.html" class="tour-more-btn" id="tourMoreBtn"
+            aria-label="Explore more virtual tour videos">
+            <span>More Video Tours</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       REDESIGNED LIBRARY PHOTO GALLERY (3 to 4 Highlight Images + See All Next Page)
+       ============================================================== -->
+  <section class="section-container featured-gallery-section" id="gallerySection">
+    <h2 class="section-title">FEAT Library Highlights</h2>
+    <p class="section-subtitle">Experience a curated preview of our study halls, digital research computing labs,
+      circulation counters, and engineering book stacks.</p>
+
+    <!-- Meta Pill -->
+    <div class="gallery-header-meta">
+      <span class="gallery-highlight-pill"><i class="fa-solid fa-star"></i> Featured Facility Highlights</span>
+      <span class="gallery-highlight-pill"><i class="fa-solid fa-layer-group"></i> 4 Curated Views Shown</span>
+      <span class="gallery-highlight-pill"><i class="fa-solid fa-expand"></i> Click to Zoom Fullscreen</span>
+    </div>
+
+    <!-- 4 Featured Highlight Images Grid -->
+    <div class="featured-gallery-grid" id="featuredGalleryGrid">
+
+      <!-- Highlight 1: AC Hall (Donated by Alumni Batch 1975) -->
+      <article class="featured-gallery-card" onclick="openLightbox(0)">
+        <div class="featured-card-media">
+          <img src="new image/web/thumbs/air%20hall%20by%20alumni%20donote%20batch%201975.jpg" alt="Air-Conditioned Reading Hall (Donated by Alumni Batch 1975)"
+            loading="lazy">
+          <span class="featured-card-badge">Alumni Batch 1975</span>
+          <span class="featured-zoom-btn" title="Click to view full photo">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
+          </span>
+        </div>
+        <div class="featured-card-body">
+          <h3 class="featured-card-title">Air-Conditioned Reading Hall (Donated by Alumni Batch 1975)</h3>
+          <p class="featured-card-desc">Special climate-controlled study hall contributed by the FEAT Alumni Batch of 1975, featuring air conditioning, acoustic wooden wall panels, and quiet reading desks.</p>
+          <div class="featured-card-footer">
+            <span>View Fullscreen</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </div>
+      </article>
+
+      <!-- Highlight 2: Reading Hall -->
+      <article class="featured-gallery-card" onclick="openLightbox(1)">
+        <div class="featured-card-media">
+          <img src="new image/web/thumbs/main%20study%20hall.jpg" alt="Air-Conditioned Central Reading Hall"
+            loading="lazy">
+          <span class="featured-card-badge">Reading Hall</span>
+          <span class="featured-zoom-btn" title="Click to view full photo">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
+          </span>
+        </div>
+        <div class="featured-card-body">
+          <h3 class="featured-card-title">Air-Conditioned Central Reading Hall</h3>
+          <p class="featured-card-desc">Quiet, climate-controlled study zone offering spacious reading desks and natural light for scholars.</p>
+          <div class="featured-card-footer">
+            <span>View Fullscreen</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </div>
+      </article>
+
+      <!-- Highlight 3: Computing & E-Journals Center -->
+      <article class="featured-gallery-card" onclick="openLightbox(2)">
+        <div class="featured-card-media">
+          <img src="new image/web/thumbs/internal%20lab%20in%20library%20(1).jpg" alt="High-Speed Computing & E-Journals Center"
+            loading="lazy">
+          <span class="featured-card-badge">E-Journals Lab</span>
+          <span class="featured-zoom-btn" title="Click to view full photo">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
+          </span>
+        </div>
+        <div class="featured-card-body">
+          <h3 class="featured-card-title">Digital Computing &amp; E-Journals</h3>
+          <p class="featured-card-desc">Networked terminals with access to IEEE Xplore, ScienceDirect, Delnet, and online test portals.</p>
+          <div class="featured-card-footer">
+            <span>View Fullscreen</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </div>
+      </article>
+
+      <!-- Highlight 4: Book Stacks -->
+      <article class="featured-gallery-card" onclick="openLightbox(3)">
+        <div class="featured-card-media">
+          <img src="new image/web/thumbs/book%20reck.jpg" alt="Departmental Engineering Book Stacks"
+            loading="lazy">
+          <span class="featured-card-badge">Book Stacks</span>
+          <span class="featured-zoom-btn" title="Click to view full photo">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
+          </span>
+        </div>
+        <div class="featured-card-body">
+          <h3 class="featured-card-title">Departmental Book Stacks</h3>
+          <p class="featured-card-desc">Open-access stacks covering Computer Science, Electronics, Mechanical, Civil, and Mathematics.</p>
+          <div class="featured-card-footer">
+            <span>View Fullscreen</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- "SEE ALL IMAGES" NEXT PAGE BANNER -->
+    <div class="gallery-see-all-banner">
+      <div class="see-all-info">
+        <span class="see-all-badge">
+          <i class="fa-solid fa-camera"></i> Complete Photographic Archive
+        </span>
+        <h3>Explore the Full Campus &amp; Facility Gallery</h3>
+        <p>Discover all 19 authentic high-definition photographs including individual study carrels, reference rooms,
+          digital OPAC terminals, and departmental book bays.</p>
+      </div>
+
+      <div class="see-all-actions">
+        <a href="gallery.html" class="see-all-cta-btn">
+          <span>See All Images (19 Photos)</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+        <span class="see-all-preview-count">
+          <i class="fa-solid fa-sparkles"></i> Filter by categories, instant search &amp; HD download
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================
+       LIBRARY STAFFS SECTION (6 Cards + Name + Description + Modal)
+       ============================================================== -->
+  <section class="section-container" id="staffsSection">
+    <h2 class="section-title">Library Staffs</h2>
+    <p class="section-subtitle">Meet our dedicated librarians, administrative personnel, and information specialists
+      managing academic resources and student facilities.</p>
+
+    <!-- 7 Staff Cards Grid -->
+    <div class="staffs-grid" id="staffsGrid">
+
+      <!-- Staff 1 -->
+      <article class="staff-card" onclick="openStaffModal(0)">
+        <div class="staff-card-media">
+          <img src="new image/staff image/Dr. J. Sasikala.jpeg" alt="Dr. J. Sasikala" loading="lazy" onerror="this.src='new image/web/staff1.svg'">
+          <span class="staff-zoom-icon" title="View details">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </span>
+        </div>
+        <div class="staff-card-body">
+          <h3 class="staff-name">Dr. J. Sasikala</h3>
+          <span class="staff-designation">
+            <i class="fa-solid fa-award"></i> Professor &amp; Library In-Charge
+          </span>
+          <p class="staff-description">Directs overall engineering library administration, collection development, academic research resource procurement, and digital library infrastructure.</p>
+          <div class="staff-card-footer">
+            <span class="staff-contact-link"><i class="fa-solid fa-envelope"></i> Contact Office</span>
+            <span class="staff-view-btn">View Card <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Staff 2 -->
+      <article class="staff-card" onclick="openStaffModal(1)">
+        <div class="staff-card-media">
+          <img src="new image/staff image/Mr. K. Ganeshan.png" alt="Mr. K. Ganeshan" loading="lazy" onerror="this.src='new image/web/staff2.svg'">
+          <span class="staff-zoom-icon" title="View details">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </span>
+        </div>
+        <div class="staff-card-body">
+          <h3 class="staff-name">Mr. K. Ganeshan</h3>
+          <span class="staff-designation">
+            <i class="fa-solid fa-briefcase"></i> Assistant Section Officer
+          </span>
+          <p class="staff-description">Supervises administrative affairs, staff workflow coordination, official correspondence, library maintenance records, and service documentation.</p>
+          <div class="staff-card-footer">
+            <span class="staff-contact-link"><i class="fa-solid fa-envelope"></i> Contact Office</span>
+            <span class="staff-view-btn">View Card <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Staff 3 -->
+      <article class="staff-card" onclick="openStaffModal(2)">
+        <div class="staff-card-media">
+          <img src="new image/staff image/Mrs. M. Revathi.png" alt="Mrs. M. Revathi" loading="lazy" onerror="this.src='new image/web/staff3.svg'">
+          <span class="staff-zoom-icon" title="View details">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </span>
+        </div>
+        <div class="staff-card-body">
+          <h3 class="staff-name">Mrs. M. Revathi</h3>
+          <span class="staff-designation">
+            <i class="fa-solid fa-book-open-reader"></i> Junior Technical Assistant (Library)
+          </span>
+          <p class="staff-description">Manages accessioning registers, technical cataloging, resource classification, Dewey Decimal indexing, and OPAC database records.</p>
+          <div class="staff-card-footer">
+            <span class="staff-contact-link"><i class="fa-solid fa-envelope"></i> Contact Office</span>
+            <span class="staff-view-btn">View Card <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Staff 4 -->
+      <article class="staff-card" onclick="openStaffModal(3)">
+        <div class="staff-card-media">
+          <img src="new image/staff image/Dr. S. Krishnakumar.png" alt="Dr. S. Krishnakumar" loading="lazy" onerror="this.src='new image/web/staff4.svg'">
+          <span class="staff-zoom-icon" title="View details">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </span>
+        </div>
+        <div class="staff-card-body">
+          <h3 class="staff-name">Dr. S. Krishnakumar</h3>
+          <span class="staff-designation">
+            <i class="fa-solid fa-database"></i> Junior Technical Assistant (Library)
+          </span>
+          <p class="staff-description">Coordinates previous semester question paper archives, digital repository maintenance, student digital terminals, and e-resource support.</p>
+          <div class="staff-card-footer">
+            <span class="staff-contact-link"><i class="fa-solid fa-envelope"></i> Contact Office</span>
+            <span class="staff-view-btn">View Card <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Staff 5 -->
+      <article class="staff-card" onclick="openStaffModal(4)">
+        <div class="staff-card-media">
+          <img src="new image/staff image/Mrs. C. Thilagavathi.png" alt="Mrs. C. Thilagavathi" loading="lazy" onerror="this.src='new image/web/staff5.svg'">
+          <span class="staff-zoom-icon" title="View details">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </span>
+        </div>
+        <div class="staff-card-body">
+          <h3 class="staff-name">Mrs. C. Thilagavathi</h3>
+          <span class="staff-designation">
+            <i class="fa-solid fa-id-card-clip"></i> Junior Technical Assistant (Library)
+          </span>
+          <p class="staff-description">Oversees automated barcode lending counters, student membership accounts, book issuance, returns, and library clearance certificates.</p>
+          <div class="staff-card-footer">
+            <span class="staff-contact-link"><i class="fa-solid fa-envelope"></i> Contact Office</span>
+            <span class="staff-view-btn">View Card <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Staff 6 -->
+      <article class="staff-card" onclick="openStaffModal(5)">
+        <div class="staff-card-media">
+          <img src="new image/staff image/Mrs. S. Bhuvaneswari.png" alt="Mrs. S. Bhuvaneswari" loading="lazy" onerror="this.src='new image/web/staff6.svg'">
+          <span class="staff-zoom-icon" title="View details">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </span>
+        </div>
+        <div class="staff-card-body">
+          <h3 class="staff-name">Mrs. S. Bhuvaneswari</h3>
+          <span class="staff-designation">
+            <i class="fa-solid fa-newspaper"></i> Junior Technical Assistant (Library)
+          </span>
+          <p class="staff-description">Manages print journals and periodicals intake, reading hall supervision, gate entry logs, reference queries, and scholar assistance.</p>
+          <div class="staff-card-footer">
+            <span class="staff-contact-link"><i class="fa-solid fa-envelope"></i> Contact Office</span>
+            <span class="staff-view-btn">View Card <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Staff 7 -->
+      <article class="staff-card" onclick="openStaffModal(6)">
+        <div class="staff-card-media">
+          <img src="new image/staff image/Mr. K. Shyamsundar.png" alt="Mr. K. Shyamsundar" loading="lazy" onerror="this.src='new image/web/staff7.svg'">
+          <span class="staff-zoom-icon" title="View details">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </span>
+        </div>
+        <div class="staff-card-body">
+          <h3 class="staff-name">Mr. K. Shyamsundar</h3>
+          <span class="staff-designation">
+            <i class="fa-solid fa-server"></i> Junior Technical Assistant (Library)
+          </span>
+          <p class="staff-description">Supports library information systems, OPAC server uptime, student digital workstation assistance, local network connectivity, and technical maintenance.</p>
+          <div class="staff-card-footer">
+            <span class="staff-contact-link"><i class="fa-solid fa-envelope"></i> Contact Office</span>
+            <span class="staff-view-btn">View Card <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Created By Section -->
+  <section class="section-container" id="createdBySection">
+    <h2 class="section-title">Created By</h2>
+    <p class="section-subtitle">Meet the student web development team (Batch: 2024–2027) behind the Annamalai University FEAT Library &amp;
+      Question Paper Archive.</p>
+
+    <div class="creator-toggle-wrap">
+      <button class="creator-toggle" id="creatorToggleBtn" type="button" onclick="toggleCreatedBy()"
+        aria-controls="creatorGrid" aria-expanded="false">
+        <i class="fa-solid fa-eye"></i> Show Created By
+      </button>
+    </div>
+
+    <div class="creator-grid is-hidden" id="creatorGrid">
+      <!-- Shafeeq Ahamed -->
+      <article class="creator-card">
+        <div class="creator-card-img-wrap">
+          <img src="new image/web/shafeeq.jpg" alt="Shafeeq Ahamed" onerror="this.src='new image/shafeeq.png'">
+          <div class="creator-img-overlay"></div>
+          <div class="creator-pill-badge">
+            <i class="fa-solid fa-code"></i> Web Developer
+          </div>
+        </div>
+        <div class="creator-card-content">
+          <div class="creator-header-meta">
+            <h3 class="creator-name"><i class="fa-solid fa-laptop-code"></i> Shafeeq Ahamed</h3>
+            <span class="creator-dept-tag">Dept. of Computer Science &amp; Engineering</span>
+            <span class="creator-batch"><i class="fa-solid fa-graduation-cap"></i> Batch: 2024–2027</span>
+          </div>
+          <p class="creator-bio">Architected the responsive portal, interactive media player, dynamic gallery systems, and student exam question paper access workflow.</p>
+         
+          <div class="creator-card-footer">
+            <span class="creator-affiliation">
+              <i class="fa-solid fa-building-columns"></i> FEAT &bull; Annamalai University
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Mukesh -->
+      <article class="creator-card">
+        <div class="creator-card-img-wrap">
+          <img src="new image/web/mukesh.jpg" alt="Mukesh" onerror="this.src='new image/mukesh.jpg'">
+          <div class="creator-img-overlay"></div>
+          <div class="creator-pill-badge">
+            <i class="fa-solid fa-video"></i> Web Developer &amp; Media
+          </div>
+        </div>
+        <div class="creator-card-content">
+          <div class="creator-header-meta">
+            <h3 class="creator-name"><i class="fa-solid fa-film"></i> Mukesh</h3>
+            <span class="creator-dept-tag">Dept. of Computer Science &amp; Engineering</span>
+            <span class="creator-batch"><i class="fa-solid fa-graduation-cap"></i> Batch: 2024–2027</span>
+          </div>
+          <p class="creator-bio">Curated photography assets, video walkthrough documentation, departmental archives, and mobile touch interface optimization.</p>
+          
+          <div class="creator-card-footer">
+            <span class="creator-affiliation">
+              <i class="fa-solid fa-building-columns"></i> FEAT &bull; Annamalai University
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Aswin Raj -->
+      <article class="creator-card">
+        <div class="creator-card-img-wrap">
+          <img src="new image/web/aswinraj.jpg" alt="Aswin Raj" onerror="this.src='new image/aswinraj.png'">
+          <div class="creator-img-overlay"></div>
+          <div class="creator-pill-badge">
+            <i class="fa-solid fa-pen-nib"></i> UI/UX &amp; Content Designer
+          </div>
+        </div>
+        <div class="creator-card-content">
+          <div class="creator-header-meta">
+            <h3 class="creator-name"><i class="fa-solid fa-pen-ruler"></i> Aswin Raj</h3>
+            <span class="creator-dept-tag">Dept. of Computer Science &amp; Engineering</span>
+            <span class="creator-batch"><i class="fa-solid fa-graduation-cap"></i> Batch: 2024–2027</span>
+          </div>
+          <p class="creator-bio">Designed the visual layouts, academic curriculum taxonomy, question paper indexing, and accessible color hierarchy.</p>
+          
+          <div class="creator-card-footer">
+            <span class="creator-affiliation">
+              <i class="fa-solid fa-building-columns"></i> FEAT &bull; Annamalai University
+            </span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Contact Us Section -->
+  <section class="section-container" id="contactSection">
+    <h2 class="section-title">Contact &amp; Support</h2>
+    <div class="contact-wrapper">
+
+      <!-- Contact Details & Map -->
+      <div class="contact-details">
+        <h3>Get in Touch</h3>
+        <p style="color: var(--text-muted); margin-top: 0.5rem;">Have questions regarding exam archives, curriculum
+          notes, or question paper submissions? Reach out to us directly.</p>
+
+        <div class="contact-item">
+          <i class="fa-solid fa-location-dot"></i>
+          <div>
+            <strong>Campus Address:</strong><br>
+            Faculty of Engineering &amp; Technology,<br>
+            Annamalai University, Annamalainagar, Chidambaram — 608002
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <i class="fa-solid fa-envelope"></i>
+          <div>
+            <strong>Email:</strong><br>
+            engglibrary@gmail.com
+          </div>
+        </div>
+
+        
+
+        <div class="map-container">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d287.6390125675225!2d79.70460367348106!3d11.390977872233776!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a54c257970bf425%3A0x835e36209a943569!2sEngineering%20Rd%2C%20Annamalai%20Nagar%2C%20Chidambaram%2C%20Tamil%20Nadu%20608002!5e1!3m2!1sen!2sin!4v1795425400543!5m2!1sen!2sin"
+            width="100%" height="180" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="contact-form-card">
+        <h3>Send a Message</h3>
+        <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" style="margin-top: 1.2rem;">
+          <!-- Web3Forms Access Key -->
+          <input type="hidden" name="access_key" value="60dea749-2aad-4978-a383-720e71bd654a">
+          <input type="hidden" name="from_name" value="FEAT Engineering Library Portal">
+          <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="name" class="form-control" placeholder="Enter your name"
+              required>
+          </div>
+          <div class="form-group">
+            <label for="emailAddr">Email Address</label>
+            <input type="email" id="emailAddr" name="email" class="form-control"
+              placeholder="student@annamalaiuniversity.ac.in" required>
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" class="form-control"
+              placeholder="Question Paper Request / Issue" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" class="form-control"
+              placeholder="Write your message here..." required></textarea>
+          </div>
+
+          <div id="formStatusMsg"
+            style="display:none; margin-bottom:1rem; padding:0.8rem 1rem; border-radius:8px; font-size:0.9rem; font-weight:600;">
+          </div>
+
+          <button type="submit" id="submitBtn" class="submit-btn"><i class="fa-solid fa-paper-plane"></i> Send Message</button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-nav-links">
+        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">Home</a>
+        <a href="#aboutSection">About University</a>
+        <a href="#visionSection">Vision &amp; Mission</a>
+        <a href="#videoTourSection">Virtual Video Tour</a>
+        <a href="#gallerySection">Highlights</a>
+        <a href="gallery.html">See All Images (10 Photos)</a>
+        <a href="#staffsSection">Staffs</a>
+        <a href="#createdBySection">Created By</a>
+        <a href="#contactSection">Contact</a>
+      </div>
+      <p>&copy; 2026 Department of Computer Science &amp; Engineering &bull; Faculty of Engineering &amp; Technology,
+        Annamalai University. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox-modal" id="lightboxModal" role="dialog" aria-modal="true" aria-label="Image Preview">
+    <button class="lightbox-close-btn" onclick="closeLightbox()" aria-label="Close image preview" title="Close Preview (Esc)">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <button class="lightbox-nav-btn lightbox-prev-btn" onclick="prevLightboxImage()" aria-label="Previous image" title="Previous photo (Left arrow)">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <button class="lightbox-nav-btn lightbox-next-btn" onclick="nextLightboxImage()" aria-label="Next image" title="Next photo (Right arrow)">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
+    <div class="lightbox-content">
+      <img id="lightboxImg" src="" alt="FEAT Library full preview">
+      <div class="lightbox-caption">
+        <span class="lightbox-title" id="lightboxTitle"></span>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <a href="gallery.html" class="lightbox-see-all-link">
+            <span>View All 19 Photos in Gallery</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+          <span class="lightbox-counter" id="lightboxCounter"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Staff Profile Modal -->
+  <div class="staff-modal" id="staffModal" role="dialog" aria-modal="true" aria-label="Staff Details">
+    <div class="staff-modal-content">
+      <button class="staff-modal-close" onclick="closeStaffModal()" aria-label="Close dialog"><i class="fa-solid fa-xmark"></i></button>
+      <div class="staff-modal-header">
+        <img id="staffModalImg" src="" alt="Staff Profile Photo">
+      </div>
+      <div class="staff-modal-body">
+        <h3 id="staffModalName"></h3>
+        <span class="staff-modal-designation" id="staffModalDesignation"></span>
+        <p class="staff-modal-desc" id="staffModalDesc"></p>
+        <div class="staff-modal-meta-grid">
+          <div class="staff-meta-item">
+            <strong>Department Section</strong>
+            <span id="staffModalDept"></span>
+          </div>
+          <div class="staff-meta-item">
+            <strong>Campus Office</strong>
+            <span id="staffModalOffice"></span>
+          </div>
+        </div>
+        <a href="#contactSection" onclick="closeStaffModal()" class="explore-btn"
+          style="width:100%; justify-content:center; padding:0.75rem 1.5rem; font-size:0.92rem;">
+          <i class="fa-solid fa-envelope"></i> Send Message to Department
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 4 Featured Highlights Data for the Index Lightbox
+    const featuredGalleryData = [
+      {
+        full: 'new image/web/full/air%20hall%20by%20alumni%20donote%20batch%201975.jpg',
+        title: 'Air-Conditioned Reading Hall (Donated by Alumni Batch 1975)'
+      },
+      {
+        full: 'new image/web/full/main%20study%20hall.jpg',
+        title: 'Air-Conditioned Central Reading Hall'
+      },
+      {
+        full: 'new image/web/full/internal%20lab%20in%20library%20(1).jpg',
+        title: 'Digital Computing & E-Journals Lab'
+      },
+      {
+        full: 'new image/web/full/book%20reck.jpg',
+        title: 'Departmental Book Stacks & Aisles'
+      }
+    ];
+
+    let currentLightboxIndex = 0;
+
+    function openLightbox(index) {
+      currentLightboxIndex = index;
+      updateLightbox();
+      const modal = document.getElementById('lightboxModal');
+      modal.classList.add('is-active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('lightboxModal');
+      modal.classList.remove('is-active');
+      document.body.style.overflow = '';
+    }
+
+    function updateLightbox() {
+      const item = featuredGalleryData[currentLightboxIndex];
+      if (!item) return;
+      const img = document.getElementById('lightboxImg');
+      const title = document.getElementById('lightboxTitle');
+      const counter = document.getElementById('lightboxCounter');
+
+      img.src = item.full;
+      img.alt = item.title;
+      title.textContent = item.title;
+      counter.textContent = `${currentLightboxIndex + 1} / ${featuredGalleryData.length}`;
+    }
+
+    function nextLightboxImage() {
+      currentLightboxIndex = (currentLightboxIndex + 1) % featuredGalleryData.length;
+      updateLightbox();
+    }
+
+    function prevLightboxImage() {
+      currentLightboxIndex = (currentLightboxIndex - 1 + featuredGalleryData.length) % featuredGalleryData.length;
+      updateLightbox();
+    }
+
+    // Staff Data for Modal Profile Popup
+    const staffData = [
+      {
+        name: 'Dr. J. Sasikala',
+        designation: 'Professor & Library In-Charge',
+        img: 'new image/staff image/Dr. J. Sasikala.jpeg',
+        tag: 'Administration',
+        desc: 'Directs overall engineering library administration, collection development policy, academic research resource procurement, digital library infrastructure, and strategic library development.',
+        dept: 'Central Engineering Library Administration',
+        office: 'Office of the Library In-Charge, FEAT Library'
+      },
+      {
+        name: 'Mr. K. Ganeshan',
+        designation: 'Assistant Section Officer',
+        img: 'new image/staff image/Mr. K. Ganeshan.png',
+        tag: 'Section Officer',
+        desc: 'Supervises administrative affairs, staff workflow coordination, official correspondence, library maintenance records, and departmental service documentation.',
+        dept: 'Administrative & Section Wing',
+        office: 'Administrative Office, Ground Floor, FEAT Library'
+      },
+      {
+        name: 'Mrs. M. Revathi',
+        designation: 'Junior Technical Assistant (Library)',
+        img: 'new image/staff image/Mrs. M. Revathi.png',
+        tag: 'Technical Assistant',
+        desc: 'Manages accessioning registers, technical cataloging, resource classification, Dewey Decimal indexing, OPAC database records, and book processing.',
+        dept: 'Technical Processing & Cataloging Division',
+        office: 'Technical Processing Wing, Ground Floor, FEAT Library'
+      },
+      {
+        name: 'Dr. S. Krishnakumar',
+        designation: 'Junior Technical Assistant (Library)',
+        img: 'new image/staff image/Dr. S. Krishnakumar.png',
+        tag: 'Technical Assistant',
+        desc: 'Coordinates previous semester question paper digitization, institutional archives, student digital browsing terminals, and online e-resource database accessibility.',
+        dept: 'Digital Archives & Technical Services',
+        office: 'Digital Repository & Lab Unit, FEAT Library'
+      },
+      {
+        name: 'Mrs. C. Thilagavathi',
+        designation: 'Junior Technical Assistant (Library)',
+        img: 'new image/staff image/Mrs. C. Thilagavathi.png',
+        tag: 'Technical Assistant',
+        desc: 'Oversees automated barcode lending counters, student membership registrations, book issuance and returns, library clearances, and stack maintenance.',
+        dept: 'Circulation & Reference Wing',
+        office: 'Main Circulation Desk, Ground Floor, FEAT Library'
+      },
+      {
+        name: 'Mrs. S. Bhuvaneswari',
+        designation: 'Junior Technical Assistant (Library)',
+        img: 'new image/staff image/Mrs. S. Bhuvaneswari.png',
+        tag: 'Technical Assistant',
+        desc: 'Manages print journals and periodicals intake, reading hall supervision, gate entry logs, reference queries, and scholar assistance.',
+        dept: 'Periodicals & Reading Hall Division',
+        office: 'Periodical Section, First Floor, FEAT Library'
+      },
+      {
+        name: 'Mr. K. Shyamsundar',
+        designation: 'Junior Technical Assistant (Library)',
+        img: 'new image/staff image/Mr. K. Shyamsundar.png',
+        tag: 'Technical Assistant',
+        desc: 'Supports library information systems, OPAC server uptime, student digital workstation assistance, local network connectivity, and technical maintenance.',
+        dept: 'Information Systems & Technical Support',
+        office: 'IT Systems & Terminal Room, FEAT Library'
+      }
+    ];
+
+    function openStaffModal(index) {
+      const staff = staffData[index];
+      if (!staff) return;
+      const modalImg = document.getElementById('staffModalImg');
+      modalImg.src = staff.img;
+      modalImg.alt = staff.name;
+      modalImg.onerror = function() {
+        this.src = 'new image/web/staff' + (index + 1) + '.svg';
+      };
+      document.getElementById('staffModalName').textContent = staff.name;
+      document.getElementById('staffModalDesignation').innerHTML = `<i class="fa-solid fa-award"></i> ${staff.designation}`;
+      document.getElementById('staffModalDesc').textContent = staff.desc;
+      document.getElementById('staffModalDept').textContent = staff.dept;
+      document.getElementById('staffModalOffice').textContent = staff.office;
+
+      const modal = document.getElementById('staffModal');
+      modal.classList.add('is-active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeStaffModal() {
+      const modal = document.getElementById('staffModal');
+      modal.classList.remove('is-active');
+      document.body.style.overflow = '';
+    }
+
+    // Modal click-outside and keyboard shortcuts
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('lightboxModal');
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            closeLightbox();
+          }
+        });
+      }
+      const staffModal = document.getElementById('staffModal');
+      if (staffModal) {
+        staffModal.addEventListener('click', (e) => {
+          if (e.target === staffModal) {
+            closeStaffModal();
+          }
+        });
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeLightbox();
+        closeStaffModal();
+      }
+      const modal = document.getElementById('lightboxModal');
+      if (modal && modal.classList.contains('is-active')) {
+        if (e.key === 'ArrowRight') nextLightboxImage();
+        if (e.key === 'ArrowLeft') prevLightboxImage();
+      }
+    });
+
+    function toggleMobileMenu() {
+      const navActions = document.getElementById('navActions');
+      const menuButton = document.getElementById('mobileMenuToggle');
+      const overlay = document.getElementById('navOverlay');
+      if (!navActions) return;
+
+      const isOpen = navActions.classList.toggle('is-open');
+      if (overlay) overlay.classList.toggle('is-active', isOpen);
+      document.body.classList.toggle('menu-open', isOpen);
+
+      if (menuButton) {
+        menuButton.setAttribute('aria-expanded', String(isOpen));
+        menuButton.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+        menuButton.innerHTML = isOpen ? `<i class="fa-solid fa-xmark"></i>` : `<i class="fa-solid fa-bars"></i>`;
+      }
+    }
+
+    function closeMobileMenu() {
+      const navActions = document.getElementById('navActions');
+      const menuButton = document.getElementById('mobileMenuToggle');
+      const overlay = document.getElementById('navOverlay');
+
+      if (navActions) navActions.classList.remove('is-open');
+      if (overlay) overlay.classList.remove('is-active');
+      document.body.classList.remove('menu-open');
+
+      if (menuButton) {
+        menuButton.setAttribute('aria-expanded', 'false');
+        menuButton.setAttribute('aria-label', 'Open navigation menu');
+        menuButton.innerHTML = `<i class="fa-solid fa-bars"></i>`;
+      }
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      const themeBtn = document.getElementById('themeToggleBtn');
+      const currentTheme = body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+      body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+
+      const iconHtml = newTheme === 'dark' ? `<i class="fa-solid fa-sun"></i>` : `<i class="fa-solid fa-moon"></i>`;
+      if (themeBtn) themeBtn.innerHTML = iconHtml;
+    }
+
+    // Initialize saved theme
+    (function initTheme() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.body.setAttribute('data-theme', savedTheme);
+      const iconHtml = savedTheme === 'dark' ? `<i class="fa-solid fa-sun"></i>` : `<i class="fa-solid fa-moon"></i>`;
+      const themeBtn = document.getElementById('themeToggleBtn');
+      if (themeBtn) themeBtn.innerHTML = iconHtml;
+    })();
+
+    function toggleCards() {
+      const wrapper = document.getElementById('cardsWrapper');
+      const btn = document.getElementById('toggleCardsBtn');
+      if (!wrapper || !btn) return;
+
+      const isActive = wrapper.classList.toggle('active');
+      btn.setAttribute('aria-expanded', String(isActive));
+
+      const span = btn.querySelector('span');
+      const indicator = btn.querySelector('.toggle-indicator');
+
+      if (isActive) {
+        btn.classList.add('is-active');
+        if (span) span.textContent = 'Hide Verification Form';
+        if (indicator) {
+          indicator.classList.remove('fa-chevron-down');
+          indicator.classList.add('fa-chevron-up');
+        }
+        setTimeout(() => {
+          wrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          const nameInput = document.getElementById('studentName');
+          if (nameInput) nameInput.focus();
+        }, 180);
+      } else {
+        btn.classList.remove('is-active');
+        if (span) span.textContent = 'Access Question Papers';
+        if (indicator) {
+          indicator.classList.remove('fa-chevron-up');
+          indicator.classList.add('fa-chevron-down');
+        }
+      }
+    }
+
+    // Google Sheets Integration URL (Direct Cloud Storage Only)
+    const GOOGLE_SHEET_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbyLgdh4Rt5G_8AKb8S6jC01e2pWuYBS7fXqLyWSJCBQ31pMR_OcIwBIH1cycEpX1o_I/exec';
+
+    async function handleStudentFormSubmit(event) {
+      event.preventDefault();
+      const nameInput = document.getElementById('studentName');
+      const deptInput = document.getElementById('studentDept');
+      const yearInput = document.getElementById('studentYear');
+      const submitBtn = document.getElementById('qpSubmitBtn');
+      const alertBox = document.getElementById('qpSuccessAlert');
+
+      const name = nameInput.value.trim();
+      const dept = deptInput.value.trim();
+      const year = yearInput.value.trim();
+
+      if (!name || !dept || !year) {
+        alert('Please complete all required fields (Name, Dept, Year of study).');
+        return;
+      }
+
+      const originalBtnHtml = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying &amp; Opening Archive...';
+
+      const now = new Date();
+      const entryId = "STU-" + String(now.getTime()).slice(-6);
+      const accessDate = now.toLocaleDateString('en-GB');
+      const accessTime = now.toLocaleTimeString('en-US');
+      const resource = "FEAT Semester Question Papers Archive (Google Drive)";
+
+      // Store in Google Sheet ONLY (real-time cloud storage)
+      try {
+        const formPayload = new URLSearchParams();
+        formPayload.append('id', entryId);
+        formPayload.append('name', name);
+        formPayload.append('dept', dept);
+        formPayload.append('year', year);
+        formPayload.append('date', accessDate);
+        formPayload.append('time', accessTime);
+        formPayload.append('resource', resource);
+
+        fetch(GOOGLE_SHEET_WEBAPP_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: formPayload,
+          keepalive: true
+        }).catch(err => console.warn('Google Sheet log warning:', err));
+      } catch (err) {
+        console.warn('Google Sheet submission warning:', err);
+      }
+
+      // Open target Google Drive Archive link in a new tab
+      const driveUrl = "https://drive.google.com/drive/folders/1nTKdsuBdirmBXnu51rbr3zWYb9UdzQBL?usp=sharing";
+      window.open(driveUrl, '_blank');
+
+      // Show friendly success feedback alert
+      if (alertBox) alertBox.style.display = 'flex';
+      nameInput.value = '';
+      deptInput.selectedIndex = 0;
+      yearInput.selectedIndex = 0;
+
+      // Restore submit button
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnHtml;
+      }, 700);
+    }
+
+    function scrollToInfo(elementId) {
+      closeMobileMenu();
+      const el = document.getElementById(elementId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function toggleCreatedBy() {
+      const creatorGrid = document.getElementById('creatorGrid');
+      const toggleButton = document.getElementById('creatorToggleBtn');
+      const isHidden = creatorGrid.classList.toggle('is-hidden');
+
+      toggleButton.setAttribute('aria-expanded', String(!isHidden));
+      toggleButton.innerHTML = isHidden
+        ? '<i class="fa-solid fa-eye"></i> Show Created By'
+        : '<i class="fa-solid fa-eye-slash"></i> Hide Created By';
+    }
+
+    function openAdmin() {
+      window.open('https://docs.google.com/spreadsheets/d/1auZ8i2ZHDCcivzvvEaKT2qxAwKYvV9zYSfP1zBKrLp4/edit', '_blank');
+    }
+
+    // Web3Forms Contact Form Handler
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+      contactForm.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        const submitBtn = document.getElementById('submitBtn');
+        const statusMsg = document.getElementById('formStatusMsg');
+        const originalText = submitBtn.innerHTML;
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending Message...';
+        statusMsg.style.display = 'none';
+
+        try {
+          const formData = new FormData(contactForm);
+          const response = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            body: formData
+          });
+          const result = await response.json();
+
+          if (result.success) {
+            statusMsg.style.display = 'block';
+            statusMsg.style.background = 'rgba(52, 211, 153, 0.15)';
+            statusMsg.style.color = '#10b981';
+            statusMsg.style.border = '1px solid rgba(52, 211, 153, 0.3)';
+            statusMsg.innerHTML = '<i class="fa-solid fa-circle-check"></i> Thank you! Your message has been sent successfully.';
+            contactForm.reset();
+          } else {
+            statusMsg.style.display = 'block';
+            statusMsg.style.background = 'rgba(239, 68, 68, 0.15)';
+            statusMsg.style.color = '#ef4444';
+            statusMsg.style.border = '1px solid rgba(239, 68, 68, 0.3)';
+            statusMsg.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + (result.message || 'Something went wrong. Please try again.');
+          }
+        } catch (error) {
+          statusMsg.style.display = 'block';
+          statusMsg.style.background = 'rgba(239, 68, 68, 0.15)';
+          statusMsg.style.color = '#ef4444';
+          statusMsg.style.border = '1px solid rgba(239, 68, 68, 0.3)';
+          statusMsg.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Network error. Please check your connection.';
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>
